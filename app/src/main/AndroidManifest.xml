@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uet.vav.stuber">
+          package="uet.vav.stuber">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -37,10 +37,13 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.parse.APPLICATION_ID"
-            android:value="@string/parse_app_id" />
+            android:value="@string/parse_app_id"/>
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="@string/parse_client_key" />
+            android:value="@string/parse_client_key"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -50,32 +53,38 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.LogInActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_signup"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.UserDetailActivity"
             android:label="@string/title_activity_user_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.BroadcastingActivity"
             android:label="@string/title_activity_broadcasting"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name"/>
         <activity
             android:name=".activities.ChatActivity"
             android:label="@string/title_activity_chat"
@@ -103,7 +112,6 @@
                 <category android:name="uet.vav.stuber" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
