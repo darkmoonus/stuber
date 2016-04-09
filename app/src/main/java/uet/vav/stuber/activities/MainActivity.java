@@ -1,5 +1,6 @@
 package uet.vav.stuber.activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,8 +16,13 @@ import java.util.ArrayList;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreActivity;
+import uet.vav.stuber.fragments.BroadcastFragment;
+import uet.vav.stuber.fragments.DirectFragment;
+import uet.vav.stuber.fragments.NotificationsFragment;
+import uet.vav.stuber.fragments.SettingsFragment;
 
 public class MainActivity extends CoreActivity {
+    private Fragment currentFragment;
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
     private FragmentManager fragmentManager = getFragmentManager();
     private AHBottomNavigation bottomNavigation;
@@ -81,27 +87,34 @@ public class MainActivity extends CoreActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, boolean wasSelected) {
+                if (!wasSelected) {
+                    switch (position) {
+                        case 0:
+                            currentFragment = new BroadcastFragment();
+                            break;
+                        case 1:
+                            currentFragment = new DirectFragment();
+                            break;
+                        case 2:
+                            currentFragment = new NotificationsFragment();
+                            break;
+                        case 3:
+                            currentFragment = new SettingsFragment();
+                            break;
+                    }
 
-                if (position == 1) {
-                    bottomNavigation.setNotification(0, 1);
+                    fragmentManager.beginTransaction()
+                            .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
+                            .replace(R.id.fragment_container, currentFragment)
+                            .commit();
                 }
-
-//                if (!wasSelected) {
-//                    currentFragment = DemoFragment.newInstance(position);
-//                    fragmentManager.beginTransaction()
-//                            .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
-//                            .replace(R.id.fragment_container, currentFragment)
-//                            .commit();
-//                } else if (position > 0) {
-//                    currentFragment.refresh();
-//                }
             }
         });
 
-//        currentFragment = DemoFragment.newInstance(0);
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, currentFragment)
-//                .commit();
+        currentFragment = new BroadcastFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, currentFragment)
+                .commit();
 
     }
 
