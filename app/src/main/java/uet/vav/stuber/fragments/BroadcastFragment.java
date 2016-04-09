@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
     private ArrayAdapter<ProblemField> mTagAdapter;
     private List<ProblemField> mAddedFields;
     private Button mSendBroadCastButton;
+    private EditText mProblemEditText;
 
     @Override
     public void onClick(View view) {
@@ -50,19 +52,20 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_broadcast, container, false);
+        mProblemEditText = (EditText) view.findViewById(R.id.problem_edittext);
 
         mSendBroadCastButton = (Button) view.findViewById(R.id.send_broadcast_button);
         mSendBroadCastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String fields = "";
-//                for (ProblemField f : mAddedFields) {
-//                    fields += f.getName() + "\n";
-//                }
-//                Toast.makeText(getActivity().getApplicationContext(), fields, Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(mActivity, BroadcastingActivity.class);
-                mActivity.startActivity(intent);
+                if (mAddedFields.size() == 0) {
+                    mActivity.showProgressDialogWithPositiveButton("error", "You are required to add at least 1 field!");
+                } else if (mProblemEditText.getText().length() <= 10) {
+                    mActivity.showProgressDialogWithPositiveButton("error", "Your problem must be more than 10 characters!");
+                } else {
+                    Intent intent = new Intent(mActivity, BroadcastingActivity.class);
+                    mActivity.startActivity(intent);
+                }
             }
         });
 

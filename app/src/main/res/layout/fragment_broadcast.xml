@@ -80,6 +80,7 @@
             android:background="#f0f4f4" />
 
         <EditText
+            android:id="@+id/problem_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
