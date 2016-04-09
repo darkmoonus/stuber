@@ -2,7 +2,9 @@ package uet.vav.stuber.fragments;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +14,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import tokenautocomplete.ContactsCompletionView;
 import tokenautocomplete.ProblemField;
 import uet.vav.stuber.R;
+import uet.vav.stuber.activities.BroadcastingActivity;
 import uet.vav.stuber.activities.MainActivity;
 import uet.vav.stuber.cores.CoreFragment;
+import uet.vav.stuber.utils.Network;
 
 public class BroadcastFragment extends CoreFragment implements TokenCompleteTextView.TokenListener {
 
@@ -61,21 +70,36 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                 } else if (mProblemEditText.getText().length() <= 10) {
                     mActivity.showProgressDialogWithPositiveButton("error", "Your problem must be more than 10 characters!");
                 } else {
-//                    ParseObject gameScore = new ParseObject("GameScore");
-//                    gameScore.put("score", 1337);
-//                    gameScore.put("playerName", "Sean Plott");
-//                    gameScore.put("cheatMode", false);
-//
-//                    String objectId = gameScore.getObjectId();
-//
-//                    gameScore.saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-////                            Network.get();
-//                            Intent intent = new Intent(mActivity, BroadcastingActivity.class);
-//                            mActivity.startActivity(intent);
-//                        }
-//                    });
+                    ParseObject broadcastRequest = new ParseObject("Question");
+                    broadcastRequest.put("fields", mAddedFields.toString());
+                    broadcastRequest.put("problem", mProblemEditText.getText().toString());
+
+                    String questionId = broadcastRequest.getObjectId();
+                    final RequestParams params = new RequestParams();
+//                    params.add("", );
+
+                    broadcastRequest.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            Network.postQuestion("https://api.parse.com/1/functions/getUsersGeoPoint", params,
+                                    new AsyncHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
+                                            Log.d("Stuber_response", new String(responseBody));
+
+                                            Intent intent = new Intent(mContext, BroadcastingActivity.class);
+                                            intent.putExtra("data", new String(responseBody));
+                                            startActivity(intent);
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    });
                 }
             }
         });

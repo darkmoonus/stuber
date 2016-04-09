@@ -1,6 +1,8 @@
 <resources>
     <string name="parse_app_id">D54tVmK03qzubK2xJi4bmMmGS0lsXaoQQbBPXIAn</string>
     <string name="parse_client_key">bVi8fbYzC0lpDtFPfab9ZbdNjd8jJ29BspqOVRYu</string>
+    <string name="parse_channel">Stuber</string>
+    
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
         AIzaSyCQZ1q0r845lK-kCfIlGXNleK1rg8qSdCM
     </string>
