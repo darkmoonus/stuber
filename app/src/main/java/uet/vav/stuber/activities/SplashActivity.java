@@ -19,7 +19,7 @@ import uet.vav.stuber.cores.CoreActivity;
  */
 public class SplashActivity extends CoreActivity {
 
-    private Button mBtLogin;
+    private Button mBtLogin, mBtSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,12 @@ public class SplashActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btLogin:
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(i);
+                Intent intentLogin = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intentLogin);
+                break;
+            case R.id.btSignup:
+                Intent intentRegister = new Intent(SplashActivity.this, SignUpActivity.class);
+                startActivity(intentRegister);
                 break;
         }
     }
@@ -46,6 +50,7 @@ public class SplashActivity extends CoreActivity {
     @Override
     public void initViews() {
         mBtLogin = (Button) findViewById(R.id.btLogin);
+        mBtSignup = (Button) findViewById(R.id.btSignup);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class SplashActivity extends CoreActivity {
     @Override
     public void initListeners() {
         mBtLogin.setOnClickListener(this);
+        mBtSignup.setOnClickListener(this);
     }
 
     @Override

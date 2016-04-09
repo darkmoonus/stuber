@@ -5,5 +5,6 @@ package uet.vav.stuber.utils;
  */
 public class Constants {
     public static String LOGIN_URL = "";
+    public static String SIGNUP_URL = "";
     public static String DEFAULT_FONT = "segueui";
 }
