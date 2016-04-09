@@ -17,7 +17,7 @@ import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
-public class LogInActivity extends CoreActivity {
+public class LoginActivity extends CoreActivity {
 
     private Button loginButton;
     private EditText password;

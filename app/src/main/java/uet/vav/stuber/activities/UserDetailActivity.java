@@ -63,7 +63,8 @@ public class UserDetailActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
+//                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
+                Intent intent = new Intent(UserDetailActivity.this, PairedActivity.class);
                 intent.putExtra("uid", StuberApplication.USER_ID);
                 intent.putExtra("pid", userID);
                 startActivity(intent);
