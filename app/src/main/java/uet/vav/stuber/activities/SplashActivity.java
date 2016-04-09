@@ -11,10 +11,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 import uet.vav.stuber.R;
+import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
 /**
@@ -31,17 +33,17 @@ public class SplashActivity extends CoreActivity {
 
         setContentView(R.layout.activity_splash);
 
-        ParseObject testObject = new ParseObject("TestObject");
+        final ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-
+                Toast.makeText(StuberApplication.getAppContext(), testObject.getObjectId(), Toast.LENGTH_LONG).show();
+                Log.wtf(LOG_TAG, testObject.getString("foo"));
             }
         });
 
         System.err.println(testObject);
-        Log.wtf(LOG_TAG, testObject.toString());
         initViews();
         initModels();
         initListeners();
