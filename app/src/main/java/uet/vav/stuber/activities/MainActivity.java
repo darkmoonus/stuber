@@ -1,9 +1,12 @@
 package uet.vav.stuber.activities;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +27,7 @@ import uet.vav.stuber.fragments.SettingsFragment;
 public class MainActivity extends CoreActivity {
     private Fragment currentFragment;
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
-    private FragmentManager fragmentManager = getFragmentManager();
+    private android.app.FragmentManager fragmentManager = getFragmentManager();
     private AHBottomNavigation bottomNavigation;
 
     @Override
@@ -35,6 +38,7 @@ public class MainActivity extends CoreActivity {
         setSupportActionBar(toolbar);
 
         initViews();
+//        initPager();
         initModels();
         initListeners();
         initAnimations();
@@ -90,16 +94,16 @@ public class MainActivity extends CoreActivity {
                 if (!wasSelected) {
                     switch (position) {
                         case 0:
-                            currentFragment = new BroadcastFragment();
+                            currentFragment = BroadcastFragment.getInstance(MainActivity.this);
                             break;
                         case 1:
-                            currentFragment = new DirectFragment();
+                            currentFragment = DirectFragment.getInstance(MainActivity.this);
                             break;
                         case 2:
-                            currentFragment = new NotificationsFragment();
+                            currentFragment = NotificationsFragment.getInstance(MainActivity.this);
                             break;
                         case 3:
-                            currentFragment = new SettingsFragment();
+                            currentFragment = SettingsFragment.getInstance(MainActivity.this);
                             break;
                     }
 
@@ -132,4 +136,60 @@ public class MainActivity extends CoreActivity {
     public void initAnimations() {
 
     }
+
+    /**
+     * Initialize pager
+     */
+//    public static final int NUM_PAGES = 4;
+//    public static ViewPager mPager;
+//    public PagerAdapter mPagerAdapter;
+//    public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+//        public ScreenSlidePagerAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//        @Override
+//        public CoreFragment getItem(int position) {
+//            switch (position) {
+//                case 0:
+//                    return BroadcastFragment.getInstance(MainActivity.this);
+//                case 1:
+//                    return DirectFragment.getInstance(MainActivity.this);
+//                case 2:
+//                    return NotificationsFragment.getInstance(MainActivity.this);
+//                case 3:
+//                    return SettingsFragment.getInstance(MainActivity.this);
+//                default:
+//                    break;
+//            }
+//            return null;
+//        }
+//        @Override
+//        public int getCount() {
+//            return NUM_PAGES;
+//        }
+//    }
+//    public void initPager() {
+//        mPager = (ViewPager) findViewById(R.id.viewpager);
+//        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+//        mPager.setOffscreenPageLimit(NUM_PAGES);
+//        mPager.setAdapter(mPagerAdapter);
+//        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int arg0) {
+//                if (mPager.getCurrentItem() == 1) {
+//
+//                } else
+//                if (mPager.getCurrentItem() == 0) {
+//
+//                }
+//            }
+//            @Override
+//            public void onPageScrolled(int arg0, float arg1, int arg2) {
+//            }
+//            @Override
+//            public void onPageScrollStateChanged(int arg0) {
+//            }
+//        });
+//        mPager.setCurrentItem(0);
+//    }
 }

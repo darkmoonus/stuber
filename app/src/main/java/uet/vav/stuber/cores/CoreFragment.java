@@ -48,9 +48,7 @@ public abstract class CoreFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {
-
-    }
+    public abstract void onClick(View view);
 
     public void finishFragment() {
         try {
