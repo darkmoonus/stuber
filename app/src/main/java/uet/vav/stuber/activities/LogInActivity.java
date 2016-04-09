@@ -1,7 +1,6 @@
 package uet.vav.stuber.activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -38,9 +37,9 @@ public class LoginActivity extends CoreActivity {
         initListeners();
         initAnimations();
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            setStatusBarColor(R.color.colorPrimaryDark);
-        }
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+//        }
     }
 
     @Override
