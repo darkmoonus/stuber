@@ -15,7 +15,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreActivity;
@@ -99,11 +101,37 @@ public class BroadcastingActivity extends CoreActivity implements
                 if (location != null) {
                     LatLng myLocation = new LatLng(location.getLatitude(),
                             location.getLongitude());
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 14));
                 }
             }
         });
         enableMyLocation();
+
+
+        // Fake 1
+        mMap.addMarker(getMarker(new LatLng(21.016493, 105.859268)));
+        mMap.addMarker(getMarker(new LatLng(21.014872, 105.863225)));
+        mMap.addMarker(getMarker(new LatLng(21.016905, 105.864810)));
+        mMap.addMarker(getMarker(new LatLng(21.009281, 105.857159)));
+        mMap.addMarker(getMarker(new LatLng(21.012795, 105.858358)));
+        mMap.addMarker(getMarker(new LatLng(21.007551, 105.867084)));
+        mMap.addMarker(getMarker(new LatLng(21.002953, 105.861241)));
+
+//                    // Fake 2
+//                    mMap.addMarker(getMarker(new LatLng(21.016493, 105.859268)));
+//                    mMap.addMarker(getMarker(new LatLng(21.014872, 105.863225)));
+//                    mMap.addMarker(getMarker(new LatLng(21.016905, 105.864810)));
+//                    mMap.addMarker(getMarker(new LatLng(21.009281, 105.857159)));
+//                    mMap.addMarker(getMarker(new LatLng(21.012795, 105.858358)));
+//                    mMap.addMarker(getMarker(new LatLng(21.007551, 105.867084)));
+//                    mMap.addMarker(getMarker(new LatLng(21.002953, 105.861241)));
+    }
+
+    public MarkerOptions getMarker(LatLng point)
+    {
+        return new MarkerOptions()
+                .position(point)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.tutor_marker));
     }
 
     /**
