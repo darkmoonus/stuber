@@ -2,10 +2,10 @@ package uet.vav.stuber.application;
 
 import android.app.Application;
 import android.content.Context;
+
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
-import uet.vav.stuber.R;
 
 /**
  * Created by darkmoonus on 4/9/16.
@@ -38,6 +38,6 @@ public class StuberApplication extends Application {
     }
 
     public static Context getAppContext() {
-        return sInstance.getApplicationContext();
+        return mInstance.getApplicationContext();
     }
 }
