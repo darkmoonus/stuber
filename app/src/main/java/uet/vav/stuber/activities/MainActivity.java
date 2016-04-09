@@ -1,18 +1,25 @@
 package uet.vav.stuber.activities;
 
+import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+
+import java.util.ArrayList;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreActivity;
 
 public class MainActivity extends CoreActivity {
+    private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
+    private FragmentManager fragmentManager = getFragmentManager();
+    private AHBottomNavigation bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +28,10 @@ public class MainActivity extends CoreActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        initViews();
+        initModels();
+        initListeners();
+        initAnimations();
     }
 
     @Override
@@ -56,6 +59,49 @@ public class MainActivity extends CoreActivity {
 
     @Override
     public void initViews() {
+        bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_maps_place, R.color.color_tab_1);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_local_bar, R.color.color_tab_2);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_local_restaurant, R.color.color_tab_3);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.tab_4, R.drawable.ic_maps_local_restaurant, R.color.color_tab_4);
+
+        bottomNavigationItems.add(item1);
+        bottomNavigationItems.add(item2);
+        bottomNavigationItems.add(item3);
+        bottomNavigationItems.add(item4);
+
+        bottomNavigation.addItems(bottomNavigationItems);
+        bottomNavigation.setAccentColor(Color.parseColor("#F63D2B"));
+        bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
+        bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#F63D2B"));
+
+        bottomNavigation.setColored(true);
+
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, boolean wasSelected) {
+
+                if (position == 1) {
+                    bottomNavigation.setNotification(0, 1);
+                }
+
+//                if (!wasSelected) {
+//                    currentFragment = DemoFragment.newInstance(position);
+//                    fragmentManager.beginTransaction()
+//                            .setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
+//                            .replace(R.id.fragment_container, currentFragment)
+//                            .commit();
+//                } else if (position > 0) {
+//                    currentFragment.refresh();
+//                }
+            }
+        });
+
+//        currentFragment = DemoFragment.newInstance(0);
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.fragment_container, currentFragment)
+//                .commit();
 
     }
 

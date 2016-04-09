@@ -1,19 +1,15 @@
 package uet.vav.stuber.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
+
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreActivity;
 
@@ -46,6 +42,10 @@ public class SplashActivity extends CoreActivity {
         initModels();
         initListeners();
         initAnimations();
+
+        Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 
     @Override

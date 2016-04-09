@@ -21,4 +21,10 @@
     <string name="parse_app_id">0G0Lo6u6htsUewbPQ20YjRhUHY64BiJYaZJeKXUT</string>
     <string name="parse_client_key">YuKKiFmp3nl3WLeHhsxvOOdVuw1J7SuyMDh55F6N</string>
 
+    <string name="tab_1">Broadcast</string>
+    <string name="tab_2">Direct</string>
+    <string name="tab_3">Notification</string>
+    <string name="tab_4">Settings</string>
+    <string name="tab_5">Label 5</string>
+
 </resources>
