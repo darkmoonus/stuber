@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,7 +25,11 @@ import uet.vav.stuber.fragments.DirectFragment;
 import uet.vav.stuber.fragments.NotificationsFragment;
 import uet.vav.stuber.fragments.SettingsFragment;
 
-public class MainActivity extends CoreActivity {
+public class MainActivity extends CoreActivity implements
+        BroadcastFragment.OnFragmentInteractionListener,
+        DirectFragment.OnFragmentInteractionListener,
+        NotificationsFragment.OnFragmentInteractionListener,
+        SettingsFragment.OnFragmentInteractionListener {
     private Fragment currentFragment;
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
     private FragmentManager fragmentManager = getFragmentManager();
@@ -144,6 +149,11 @@ public class MainActivity extends CoreActivity {
 
     @Override
     public void initAnimations() {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
