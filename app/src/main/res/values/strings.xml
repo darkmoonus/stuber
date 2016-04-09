@@ -1,4 +1,7 @@
 <resources>
+    <string name="parse_app_id">D54tVmK03qzubK2xJi4bmMmGS0lsXaoQQbBPXIAn</string>
+    <string name="parse_client_key">bVi8fbYzC0lpDtFPfab9ZbdNjd8jJ29BspqOVRYu</string>
+
     <string name="app_name">Stuber</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login to Stuber</string>
@@ -10,16 +13,17 @@
     <string name="preferences">Preferences</string>
 
     <string name="title_activity_splash">Stuber</string>
-    <string name="login">Đăng nhập</string>
-    <string name="register">Đăng ký</string>
+    <string name="login">Login</string>
+    <string name="register">Sign up</string>
 
     <string name="prompt_email">Email</string>
     <string name="prompt_fullname">Fullname</string>
-    <string name="prompt_username">Tên đăng nhập</string>
-    <string name="prompt_password">Mật khẩu</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
 
-    <string name="parse_app_id">D54tVmK03qzubK2xJi4bmMmGS0lsXaoQQbBPXIAn</string>
-    <string name="parse_client_key">bVi8fbYzC0lpDtFPfab9ZbdNjd8jJ29BspqOVRYu</string>
+    <string name="login_fb">Login with Facebook</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="signup_link">Doesn\'t have an account? Sign up</string>
 
     <string name="tab_1">Broadcast</string>
     <string name="tab_2">Direct</string>

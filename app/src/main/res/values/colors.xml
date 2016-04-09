@@ -22,8 +22,9 @@
     <color name="light_black">#333333</color>
     <color name="colorFAB1">#2196F3</color>
     <color name="colorFAB2">#E040FB</color>
+    <color name="colorFB">#3b5998</color>
 
-    <color name="broadcast">#607D8B</color>
+    <color name="broadcast">#374049</color>
     <color name="direct">#4CAF50</color>
     <color name="notification">#795548</color>
     <color name="settings">#5D4037</color>
