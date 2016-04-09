@@ -33,4 +33,5 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.4.0'
     compile 'com.parse:parse-android:1.13.0'
     compile 'com.aurelhubert:ahbottomnavigation:1.0.5'
+    compile 'com.github.rey5137:material:1.2.2'
 }
