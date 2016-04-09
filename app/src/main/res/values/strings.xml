@@ -25,4 +25,10 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="signup_link">Doesn\'t have an account? Sign up</string>
 
+    <string name="tab_1">Broadcast</string>
+    <string name="tab_2">Direct</string>
+    <string name="tab_3">Notification</string>
+    <string name="tab_4">Settings</string>
+    <string name="tab_5">Label 5</string>
+
 </resources>
