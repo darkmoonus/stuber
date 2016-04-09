@@ -2,17 +2,11 @@ package uet.vav.stuber.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import android.widget.Toast;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-
+import com.parse.ParseUser;
 import uet.vav.stuber.R;
-import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
 /**
@@ -29,34 +23,30 @@ public class SplashActivity extends CoreActivity {
 
         setContentView(R.layout.activity_splash);
 
-//        initViews();
-//        initModels();
-//        initListeners();
-//        initAnimations();
+        initViews();
+        initModels();
+        initListeners();
+        initAnimations();
 
-        Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(mainIntent);
-        finish();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btLogin:
-                Intent intentLogin = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intentLogin);
-                break;
-            case R.id.btSignup:
-                Intent intentRegister = new Intent(SplashActivity.this, SignUpActivity.class);
-                startActivity(intentRegister);
-                break;
+        // Check user session cache
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+            sendUserInfoToActivity(currentUser, MainActivity.class);
+        } else {
+            Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(mainIntent);
+            finish();
         }
     }
 
     @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
     public void initViews() {
-        mBtLogin = (Button) findViewById(R.id.btLogin);
-        mBtSignup = (Button) findViewById(R.id.btSignup);
     }
 
     @Override
@@ -66,8 +56,6 @@ public class SplashActivity extends CoreActivity {
 
     @Override
     public void initListeners() {
-        mBtLogin.setOnClickListener(this);
-        mBtSignup.setOnClickListener(this);
     }
 
     @Override

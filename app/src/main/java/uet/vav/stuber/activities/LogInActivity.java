@@ -1,6 +1,7 @@
 package uet.vav.stuber.activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -90,14 +91,7 @@ public class LoginActivity extends CoreActivity {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     // Hooray! The user is logged in.
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra(Constants.PROFILE_ID, user.getObjectId());
-                    intent.putExtra(Constants.PROFILE_USERNAME, user.getUsername());
-                    intent.putExtra(Constants.PROFILE_NAME, user.getString(Constants.PROFILE_NAME));
-                    intent.putExtra(Constants.PROFILE_EMAIl, user.getEmail());
-                    intent.putExtra(Constants.PROFILE_AVATAR_URL, user.getString(Constants.PROFILE_AVATAR_URL));
-                    finish();
-                    startActivity(intent);
+                    sendUserInfoToActivity(user, MainActivity.class);
                     removePreviousDialog("Login");
                 } else {
                     // Signup failed. Look at the ParseException to see what happened.

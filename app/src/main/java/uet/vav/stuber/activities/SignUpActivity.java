@@ -89,13 +89,7 @@ public class SignUpActivity extends CoreActivity {
                     public void done(ParseException e) {
                         if (e == null) {
                             // Hooray! Let them use the app now.
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            intent.putExtra(Constants.PROFILE_ID, user.getObjectId());
-                            intent.putExtra(Constants.PROFILE_USERNAME, user.getUsername());
-                            intent.putExtra(Constants.PROFILE_NAME, user.getString(Constants.PROFILE_NAME));
-                            intent.putExtra(Constants.PROFILE_EMAIl, user.getEmail());
-                            intent.putExtra(Constants.PROFILE_AVATAR_URL, user.getString(Constants.PROFILE_AVATAR_URL));
-//                            startActivity(intent);
+                            sendUserInfoToActivity(user, MainActivity.class);
                             removePreviousDialog("Signup");
                         } else {
                             // Sign up didn't succeed. Look at the ParseException

@@ -1,19 +1,29 @@
 package uet.vav.stuber.cores;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
+import com.parse.ParseUser;
+import uet.vav.stuber.activities.LoginActivity;
+import uet.vav.stuber.activities.MainActivity;
+import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.uet.vav.dialogs.DialogProgress;
 import uet.vav.stuber.uet.vav.dialogs.DialogProgressWithPositiveButton;
+import uet.vav.stuber.utils.Constants;
 
 /**
  * Created by darkmoonus on 4/9/16.
  */
 public abstract class CoreActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String LOG_TAG = "CoreActivity";
+
     @Override
     public abstract void onClick(View v);
 
@@ -59,4 +69,19 @@ public abstract class CoreActivity extends AppCompatActivity implements View.OnC
     public abstract void initListeners();
 
     public abstract void initAnimations();
+
+    public void sendUserInfoToActivity(ParseUser user, final Class<? extends Activity> activity) {
+        if (user == null) {
+            Log.wtf(LOG_TAG, "User is null.");
+        } else {
+            Intent intent = new Intent(CoreActivity.this, activity);
+            intent.putExtra(Constants.PROFILE_ID, user.getObjectId());
+            intent.putExtra(Constants.PROFILE_USERNAME, user.getUsername());
+            intent.putExtra(Constants.PROFILE_NAME, user.getString(Constants.PROFILE_NAME));
+            intent.putExtra(Constants.PROFILE_EMAIl, user.getEmail());
+            intent.putExtra(Constants.PROFILE_AVATAR_URL, user.getString(Constants.PROFILE_AVATAR_URL));
+            finish();
+            startActivity(intent);
+        }
+    }
 }
