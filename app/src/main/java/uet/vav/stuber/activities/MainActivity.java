@@ -38,7 +38,6 @@ public class MainActivity extends CoreActivity {
         initListeners();
         initAnimations();
 
-        ParseUtils.subscribeWithEmail("b@gmail.com");
     }
 
     @Override

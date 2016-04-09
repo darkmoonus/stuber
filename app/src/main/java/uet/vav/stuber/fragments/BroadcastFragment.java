@@ -76,7 +76,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
 
                     String questionId = broadcastRequest.getObjectId();
                     final RequestParams params = new RequestParams();
-//                    params.add("", );
+                    params.add("question", questionId);
 
                     broadcastRequest.saveInBackground(new SaveCallback() {
                         @Override
