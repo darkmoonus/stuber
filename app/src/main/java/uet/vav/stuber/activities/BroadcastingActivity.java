@@ -92,6 +92,7 @@ public class BroadcastingActivity extends CoreActivity implements
         mMap = map;
 
 //        mMap.setOnMyLocationButtonClickListener(this);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {

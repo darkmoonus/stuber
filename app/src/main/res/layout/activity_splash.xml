@@ -1,22 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context="uet.vav.stuber.activities.SplashActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
+              android:gravity="center"
+              android:orientation="vertical"
+              style="@style/Theme.AppCompat.Light.NoActionBar"
+              tools:context="uet.vav.stuber.activities.SplashActivity">
 
-
-    <Button
-        android:id="@+id/btLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login" />
-
-    <Button
-        android:id="@+id/btSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register" />
 </LinearLayout>

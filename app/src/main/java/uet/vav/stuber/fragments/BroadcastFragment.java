@@ -55,11 +55,11 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
         mSendBroadCastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fields = "";
-                for (ProblemField f : mAddedFields) {
-                    fields += f.getName() + "\n";
-                }
-                Toast.makeText(getActivity().getApplicationContext(), fields, Toast.LENGTH_LONG).show();
+//                String fields = "";
+//                for (ProblemField f : mAddedFields) {
+//                    fields += f.getName() + "\n";
+//                }
+//                Toast.makeText(getActivity().getApplicationContext(), fields, Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mActivity, BroadcastingActivity.class);
                 mActivity.startActivity(intent);
