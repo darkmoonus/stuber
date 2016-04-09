@@ -18,6 +18,9 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/parse_client_key"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
         <activity
             android:name=".activities.SplashActivity"
@@ -50,6 +53,12 @@
             android:name=".activities.BroadcastingActivity"
             android:label="@string/title_activity_broadcasting"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

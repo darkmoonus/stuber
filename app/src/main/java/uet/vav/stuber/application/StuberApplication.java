@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 /**
@@ -30,6 +31,8 @@ public class StuberApplication extends Application {
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
+
+        ParseFacebookUtils.initialize(this);
 
         mInstance = this;
     }
