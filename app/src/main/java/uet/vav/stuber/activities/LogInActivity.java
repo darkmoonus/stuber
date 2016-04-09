@@ -15,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import uet.vav.stuber.R;
+import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
 public class LoginActivity extends CoreActivity {
@@ -34,7 +35,7 @@ public class LoginActivity extends CoreActivity {
         initAnimations();
 
         if (Build.VERSION.SDK_INT >= 21) {
-            setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            setStatusBarColor(R.color.colorPrimaryDark);
         }
     }
 
@@ -62,12 +63,13 @@ public class LoginActivity extends CoreActivity {
 
     }
 
-    public void login(String email, String pass) {
+    public void login(final String email, String pass) {
         showProgressDialog("Login", "Logging in...");
         ParseUser.logInInBackground(email, pass, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     // Hooray! The user is logged in.
+                    StuberApplication.USER_ID = email;
                     sendUserInfoToActivity(user, MainActivity.class);
                     removePreviousDialog("Login");
                 } else {

@@ -127,5 +127,6 @@
     <string name="logo_name">tuber</string>
     <string name="first_logo_name">S</string>
     <string name="welcome_text">Welcome to tutoring network Stuber!</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 </resources>
