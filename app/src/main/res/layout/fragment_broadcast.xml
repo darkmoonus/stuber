@@ -94,6 +94,7 @@
             android:background="#f0f4f4"/>
 
         <Button
+            android:id="@+id/send_broadcast_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SEND BROADCAST"

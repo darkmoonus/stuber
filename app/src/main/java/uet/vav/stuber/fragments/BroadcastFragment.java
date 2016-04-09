@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
@@ -45,7 +47,8 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
     private ContactsCompletionView mCompletionView;
     private ProblemField[] mFields;
     private ArrayAdapter<ProblemField> mTagAdapter;
-    private List<String> mOfferedTags;
+    private List<ProblemField> mAddedFields;
+    private Button mSendBroadCastButton;
 
     public BroadcastFragment() {
         // Required empty public constructor
@@ -84,8 +87,20 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_broadcast, container, false);
 
-        mOfferedTags = new ArrayList<>();
-        mFields = new ProblemField[]{
+        mSendBroadCastButton = (Button) view.findViewById(R.id.send_broadcast_button);
+        mSendBroadCastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fields = "";
+                for (ProblemField f : mAddedFields) {
+                    fields += f.getName() + "\n";
+                }
+                Toast.makeText(getActivity().getApplicationContext(), fields, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mAddedFields = new ArrayList<>();
+        mFields = new ProblemField[] {
                 new ProblemField(1, "Java"),
                 new ProblemField(2, "Android"),
                 new ProblemField(3, "PHP"),
@@ -118,7 +133,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
             @Override
             protected boolean keepObject(ProblemField tag, String mask) {
                 mask = mask.toLowerCase();
-                return (tag.getName().toLowerCase().startsWith(mask) && !mOfferedTags.contains(tag.getName()));
+                return (tag.getName().toLowerCase().startsWith(mask) && !mAddedFields.contains(tag.getName()));
             }
         };
 
@@ -170,12 +185,13 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
     }
 
     @Override
-    public void onTokenAdded(Object token) {
-        mOfferedTags.add(((ProblemField) token).getName());
+    public void onTokenAdded(Object field) {
+        mAddedFields.add(((ProblemField) field));
+        Toast.makeText(getActivity().getApplicationContext(), "Number of fields: " + mAddedFields.size(), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onTokenRemoved(Object token) {
-
+    public void onTokenRemoved(Object field) {
+        mAddedFields.remove(field);
     }
 }

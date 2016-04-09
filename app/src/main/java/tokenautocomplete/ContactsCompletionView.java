@@ -46,6 +46,6 @@ public class ContactsCompletionView extends TokenCompleteTextView<ProblemField> 
 
     @Override
     protected ProblemField defaultObject(String completionText) {
-        return null;
+        return new ProblemField(-1, completionText);
     }
 }
