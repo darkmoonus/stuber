@@ -2,13 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uet.vav.stuber.fragments.BroadcastFragment" >
+    tools:context="uet.vav.stuber.fragments.BroadcastFragment"
+    android:background="@color/broadcast_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/broadcast_img"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/broadcast">
+        android:background="@color/broadcast_img">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,5 +41,47 @@
             android:textColor="@color/white"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/broadcast_img"
+        android:background="@color/white">
 
+        <Spinner
+            android:id="@+id/subject_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal">
+        </Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:textSize="16sp"
+            android:hint="Ex: Finding the integral of a logarithmic function 1/(3 + ln x) dx"
+            android:background="#f0f4f4"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SEND BROADCAST"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#ff5252"/>
+    </LinearLayout>
 </RelativeLayout>

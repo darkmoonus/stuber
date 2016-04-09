@@ -7,6 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreFragment;
@@ -66,7 +72,53 @@ public class BroadcastFragment extends CoreFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_broadcast, container, false);
+        View view = inflater.inflate(R.layout.fragment_broadcast, container, false);
+
+        // Spinner element
+        Spinner spinner = (Spinner) view.findViewById(R.id.subject_spinner);
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<>();
+        categories.add("Math");
+        categories.add("Physics");
+        categories.add("Chemistry");
+        categories.add("English");
+        categories.add("C++");
+        categories.add("Java");
+        categories.add("Python");
+        categories.add("Javascript");
+        categories.add("PHP");
+        categories.add("Android");
+        categories.add("iOS");
+        categories.add("Web");
+        categories.add("Node.js");
+        categories.add("Machine Learning");
+        categories.add("Natural Language Processing");
+        categories.add("Data Mining");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
