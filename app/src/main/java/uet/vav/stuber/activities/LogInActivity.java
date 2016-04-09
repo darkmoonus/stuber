@@ -1,12 +1,10 @@
 package uet.vav.stuber.activities;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -15,13 +13,20 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import uet.vav.stuber.R;
+import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
+import uet.vav.stuber.utils.Constants;
+import uet.vav.stuber.utils.Network;
 
-public class LogInActivity extends CoreActivity {
+public class LoginActivity extends CoreActivity {
 
     private Button loginButton;
     private EditText password;
@@ -77,7 +82,7 @@ public class LogInActivity extends CoreActivity {
         params.put("email", email);
         params.put("password", pass);
         showProgressDialog("Login", "Loging in...");
-        J4FClient.post(Configs.LOGIN, params, new JsonHttpResponseHandler() {
+        Network.post(Constants.LOGIN_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -86,8 +91,8 @@ public class LogInActivity extends CoreActivity {
                         String id = data.getString("id");
                         String username = data.getString("username");
                         String avatar = data.getString("avatar");
-                        Intent intent = new Intent(SigninActivity.this, MainActivity.class);
-                        MyApplication.USER_ID = id;
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        StuberApplication.USER_ID = id;
                         intent.putExtra("id", id);
                         intent.putExtra("username", username);
                         intent.putExtra("avatar", avatar);

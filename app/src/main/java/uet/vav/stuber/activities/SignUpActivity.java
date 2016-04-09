@@ -29,4 +29,28 @@ public class SignUpActivity extends CoreActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void initViews() {
+
+    }
+
+    @Override
+    public void initModels() {
+
+    }
+
+    @Override
+    public void initListeners() {
+
+    }
+
+    @Override
+    public void initAnimations() {
+
+    }
 }
