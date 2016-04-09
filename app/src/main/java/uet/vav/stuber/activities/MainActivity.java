@@ -1,4 +1,4 @@
-package uet.vav.stuber;
+package uet.vav.stuber.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import uet.vav.stuber.R;
+import uet.vav.stuber.cores.CoreActivity;
+
+public class MainActivity extends CoreActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
