@@ -124,5 +124,8 @@
     </string>
     <string name="btn_log_out">Log out</string>
     <string name="title_activity_broadcasting">BroadcastingActivity</string>
+    <string name="logo_name">tuber</string>
+    <string name="first_logo_name">S</string>
+    <string name="welcome_text">Welcome to tutoring network Stuber!</string>
 
 </resources>

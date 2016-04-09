@@ -31,11 +31,13 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:src="@mipmap/stuber"/>
+        <include layout="@layout/logo"/>
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="16dp"-->
+            <!--android:src="@mipmap/stuber"/>-->
 
         <uet.vav.stuber.customizes.MyTextView
             android:layout_width="match_parent"
@@ -43,9 +45,9 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Welcome to tutoring network Stuber"
+            android:text="@string/welcome_text"
             android:textColor="@color/lightgray"
-            android:textSize="18dp"/>
+            android:textSize="@dimen/welcome_text_size"/>
 
         <LinearLayout
             android:orientation="vertical"

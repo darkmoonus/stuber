@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/login_background"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context="com.j4f.activities.SigninActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/login_background"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              tools:context="com.j4f.activities.SigninActivity">
 
     <!-- Login progress -->
     <ProgressBar
@@ -14,20 +14,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:src="@mipmap/stuber"/>
+    <!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="16dp"-->
+    <!--android:src="@mipmap/stuber"/>-->
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal">
-
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -37,21 +36,24 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <include layout="@layout/logo"/>
+
             <uet.vav.stuber.customizes.MyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Welcome to student tutoring network StutNet"
+                android:text="@string/welcome_text"
                 android:textColor="@color/lightgray"
-                android:textSize="18dp" />
+                android:textSize="@dimen/welcome_text_size"/>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <AutoCompleteTextView
                     android:id="@+id/full_name"
                     android:layout_width="match_parent"
@@ -63,7 +65,7 @@
                     android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/gray"
-                    android:textColorHint="@color/lightgray" />
+                    android:textColorHint="@color/lightgray"/>
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -76,7 +78,7 @@
                     android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/gray"
-                    android:textColorHint="@color/lightgray" />
+                    android:textColorHint="@color/lightgray"/>
 
 
                 <uet.vav.stuber.customizes.MyEditText
@@ -95,7 +97,7 @@
                     android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/gray"
-                    android:textColorHint="@color/lightgray" />
+                    android:textColorHint="@color/lightgray"/>
             </LinearLayout>
 
             <Button
@@ -108,7 +110,7 @@
                 android:background="@color/colorPrimary"
                 android:text="@string/register"
                 android:textColor="#ffffff"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>

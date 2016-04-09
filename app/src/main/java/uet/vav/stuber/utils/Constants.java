@@ -7,6 +7,7 @@ public class Constants {
     public static String LOGIN_URL = "";
     public static String SIGNUP_URL = "";
     public static String DEFAULT_FONT = "segueui";
+    public static String LOGO_FONT = "arkhip_font";
 
     // Constant for User Profile
     public static String PROFILE_NAME = "Name";
