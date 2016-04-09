@@ -9,44 +9,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RatingBar;
 
 import uet.vav.stuber.R;
-import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
-import uet.vav.stuber.customizes.MyTextView;
-import uet.vav.stuber.models.User;
 
-public class UserDetailActivity extends CoreActivity {
+public class ChatActivity extends CoreActivity {
 
-    private String userID;
     private ActionBar actionBar;
-    private FloatingActionButton fab;
-    private User user;
-    private RatingBar rating;
-    private MyTextView tvRatingString;
-    private MyTextView tvRateHire;
-    private MyTextView tvEmail;
-    private MyTextView tvAddress;
-    private MyTextView tvExperiences;
-    private MyTextView tvProject;
+    private String userID, partnerId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail);
-
+        setContentView(R.layout.activity_chat);
         initViews();
         initModels();
         initListeners();
         initAnimations();
-
-        loadUserData();
-    }
-
-    public void loadUserData() {
-
+        loadConversation();
     }
 
     private void setupToolbar() {
@@ -59,21 +40,22 @@ public class UserDetailActivity extends CoreActivity {
         }
     }
 
+    private void loadConversation() {
+
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
-                intent.putExtra("uid", StuberApplication.USER_ID);
-                intent.putExtra("pid", userID);
-                startActivity(intent);
                 break;
         }
     }
 
     @Override
     public void initViews() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+
     }
 
     @Override
@@ -81,13 +63,15 @@ public class UserDetailActivity extends CoreActivity {
         setupToolbar();
         Intent intent = getIntent();
         userID = intent.getStringExtra("uid");
+        partnerId = intent.getStringExtra("pid");
         setStatusBarColor(R.color.colorPrimary);
         actionBar.setTitle(userID);
     }
 
+
     @Override
     public void initListeners() {
-        fab.setOnClickListener(this);
+
     }
 
     @Override

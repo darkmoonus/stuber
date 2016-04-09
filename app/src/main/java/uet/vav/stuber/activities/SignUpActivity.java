@@ -89,6 +89,7 @@ public class SignUpActivity extends CoreActivity {
                     public void done(ParseException e) {
                         if (e == null) {
                             // Hooray! Let them use the app now.
+                            StuberApplication.USER_ID = email;
                             sendUserInfoToActivity(user, MainActivity.class);
                             removePreviousDialog("Signup");
                         } else {
