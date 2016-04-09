@@ -1,5 +1,6 @@
 package uet.vav.stuber.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,13 +8,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.tokenautocomplete.FilteredArrayAdapter;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import tokenautocomplete.ContactsCompletionView;
+import tokenautocomplete.ProblemField;
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreFragment;
 
@@ -25,7 +30,7 @@ import uet.vav.stuber.cores.CoreFragment;
  * Use the {@link BroadcastFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BroadcastFragment extends CoreFragment {
+public class BroadcastFragment extends CoreFragment implements TokenCompleteTextView.TokenListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +41,11 @@ public class BroadcastFragment extends CoreFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ContactsCompletionView mCompletionView;
+    private ProblemField[] mFields;
+    private ArrayAdapter<ProblemField> mTagAdapter;
+    private List<String> mOfferedTags;
 
     public BroadcastFragment() {
         // Required empty public constructor
@@ -74,49 +84,48 @@ public class BroadcastFragment extends CoreFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_broadcast, container, false);
 
-        // Spinner element
-        Spinner spinner = (Spinner) view.findViewById(R.id.subject_spinner);
+        mOfferedTags = new ArrayList<>();
+        mFields = new ProblemField[]{
+                new ProblemField(1, "Java"),
+                new ProblemField(2, "Android"),
+                new ProblemField(3, "PHP"),
+                new ProblemField(4, "Javascript"),
+                new ProblemField(5, "Python"),
+                new ProblemField(6, "Web"),
+                new ProblemField(7, "AngularJS"),
+                new ProblemField(8, "Mathematics"),
+                new ProblemField(9, "C/C++"),
+                new ProblemField(10, "Physics"),
+                new ProblemField(11, "Calculus"),
+                new ProblemField(12, "Chemistry")
+        };
 
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mTagAdapter = new FilteredArrayAdapter<ProblemField>(view.getContext(), R.layout.item_tag, mFields) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
 
+                    LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                    convertView = l.inflate(R.layout.item_tag, parent, false);
+                }
+
+                ProblemField p = getItem(position);
+                ((TextView) convertView.findViewById(R.id.name)).setText(p.getName());
+
+                return convertView;
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            protected boolean keepObject(ProblemField tag, String mask) {
+                mask = mask.toLowerCase();
+                return (tag.getName().toLowerCase().startsWith(mask) && !mOfferedTags.contains(tag.getName()));
             }
-        });
+        };
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<>();
-        categories.add("Math");
-        categories.add("Physics");
-        categories.add("Chemistry");
-        categories.add("English");
-        categories.add("C++");
-        categories.add("Java");
-        categories.add("Python");
-        categories.add("Javascript");
-        categories.add("PHP");
-        categories.add("Android");
-        categories.add("iOS");
-        categories.add("Web");
-        categories.add("Node.js");
-        categories.add("Machine Learning");
-        categories.add("Natural Language Processing");
-        categories.add("Data Mining");
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        mCompletionView = (ContactsCompletionView) view.findViewById(R.id.searchView);
+        mCompletionView.setAdapter(mTagAdapter);
+        mCompletionView.setTokenListener(this);
+        mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
 
         return view;
     }
@@ -158,5 +167,15 @@ public class BroadcastFragment extends CoreFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onTokenAdded(Object token) {
+        mOfferedTags.add(((ProblemField) token).getName());
+    }
+
+    @Override
+    public void onTokenRemoved(Object token) {
+
     }
 }

@@ -1,13 +1,16 @@
 package uet.vav.stuber.activities;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -31,13 +34,20 @@ public class MainActivity extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setStatusBarColor(R.color.broadcast_img);
 
         initViews();
         initModels();
         initListeners();
         initAnimations();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setStatusBarColor(int colorId) {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(colorId));
     }
 
     @Override
@@ -90,15 +100,19 @@ public class MainActivity extends CoreActivity {
                 if (!wasSelected) {
                     switch (position) {
                         case 0:
+                            setStatusBarColor(R.color.broadcast_img);
                             currentFragment = new BroadcastFragment();
                             break;
                         case 1:
+                            setStatusBarColor(R.color.color_tab_2);
                             currentFragment = new DirectFragment();
                             break;
                         case 2:
+                            setStatusBarColor(R.color.color_tab_3);
                             currentFragment = new NotificationsFragment();
                             break;
                         case 3:
+                            setStatusBarColor(R.color.color_tab_4);
                             currentFragment = new SettingsFragment();
                             break;
                     }
@@ -111,11 +125,11 @@ public class MainActivity extends CoreActivity {
             }
         });
 
+        setStatusBarColor(R.color.broadcast_img);
         currentFragment = new BroadcastFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, currentFragment)
                 .commit();
-
     }
 
     @Override

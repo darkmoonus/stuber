@@ -2,17 +2,10 @@ package uet.vav.stuber.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import android.widget.Toast;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-
 import uet.vav.stuber.R;
-import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
 /**
