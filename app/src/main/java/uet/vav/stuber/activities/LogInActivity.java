@@ -1,36 +1,23 @@
 package uet.vav.stuber.activities;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.TextView;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import cz.msebera.android.httpclient.Header;
 import uet.vav.stuber.R;
-import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
-import uet.vav.stuber.utils.Constants;
-import uet.vav.stuber.utils.Network;
 
 public class LoginActivity extends CoreActivity {
     private final static String LOG_TAG = "LoginActivity";
@@ -51,23 +38,8 @@ public class LoginActivity extends CoreActivity {
         initAnimations();
 
         if (Build.VERSION.SDK_INT >= 21) {
-            setStatusBarColor();
+            setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @Override

@@ -1,14 +1,20 @@
 package uet.vav.stuber.cores;
 
+import android.support.v7.app.AppCompatActivity;
+
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.parse.ParseUser;
 import uet.vav.stuber.dialogs.DialogProgress;
 import uet.vav.stuber.uet.vav.dialogs.DialogProgressWithPositiveButton;
@@ -65,6 +71,14 @@ public abstract class CoreActivity extends AppCompatActivity implements View.OnC
     public abstract void initListeners();
 
     public abstract void initAnimations();
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setStatusBarColor(int colorId) {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(colorId));
+    }
 
     public void sendUserInfoToActivity(ParseUser user, final Class<? extends Activity> activity) {
         if (user == null) {
