@@ -14,6 +14,8 @@ import com.parse.ParseUser;
 public class StuberApplication extends Application {
     private static StuberApplication mInstance;
 
+    public static String USER_ID;
+
     @Override
     public void onCreate() {
         super.onCreate();

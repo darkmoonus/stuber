@@ -127,6 +127,7 @@
     <string name="logo_name">tuber</string>
     <string name="first_logo_name">S</string>
     <string name="welcome_text">Welcome to tutoring network Stuber!</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
     <string name="facebook_app_id">248610692154458</string>
 </resources>
