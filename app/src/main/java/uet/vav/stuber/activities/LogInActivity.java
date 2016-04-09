@@ -13,9 +13,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +35,7 @@ public class LoginActivity extends CoreActivity {
     private Button loginButton;
     private EditText password;
     private AutoCompleteTextView username;
+    private TextView sigupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class LoginActivity extends CoreActivity {
     @Override
     public void initViews() {
         loginButton = (Button) findViewById(R.id.confirm_sign_in_button);
+        sigupLink = (TextView) findViewById(R.id.link_to_singup);
         username = (AutoCompleteTextView) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
     }
@@ -70,6 +76,7 @@ public class LoginActivity extends CoreActivity {
     @Override
     public void initListeners() {
         loginButton.setOnClickListener(this);
+        sigupLink.setOnClickListener(this);
     }
 
     @Override
@@ -78,39 +85,26 @@ public class LoginActivity extends CoreActivity {
     }
 
     public void login(String email, String pass) {
-        RequestParams params = new RequestParams();
-        params.put("email", email);
-        params.put("password", pass);
-        showProgressDialog("Login", "Loging in...");
-        Network.post(Constants.LOGIN_URL, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getString("status").equals("ok")) {
-                        JSONObject data = response.getJSONObject("data");
-                        String id = data.getString("id");
-                        String username = data.getString("username");
-                        String avatar = data.getString("avatar");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        StuberApplication.USER_ID = id;
-                        intent.putExtra("id", id);
-                        intent.putExtra("username", username);
-                        intent.putExtra("avatar", avatar);
-                        finish();
-                        startActivity(intent);
-                        removePreviousDialog("Login");
-                    }
-                } catch (JSONException e) {
+        showProgressDialog("Login", "Logging in...");
+        ParseUser.logInInBackground(email, pass, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    // Hooray! The user is logged in.
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra(Constants.PROFILE_ID, user.getObjectId());
+                    intent.putExtra(Constants.PROFILE_USERNAME, user.getUsername());
+                    intent.putExtra(Constants.PROFILE_NAME, user.getString(Constants.PROFILE_NAME));
+                    intent.putExtra(Constants.PROFILE_EMAIl, user.getEmail());
+                    intent.putExtra(Constants.PROFILE_AVATAR_URL, user.getString(Constants.PROFILE_AVATAR_URL));
+                    finish();
+                    startActivity(intent);
                     removePreviousDialog("Login");
+                } else {
+                    // Signup failed. Look at the ParseException to see what happened.
+                    removePreviousDialog("Login");
+                    showProgressDialogWithPositiveButton("LoginFailed", "Login failed!");
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
-                removePreviousDialog("Login");
-                Log.e("onFailure", e.toString());
-                Log.e("errorResponse", errorResponse);
             }
         });
     }
@@ -126,14 +120,17 @@ public class LoginActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.confirm_sign_in_button:
-                String email = username.getText().toString();
-                String pass = password.getText().toString();
+                String email = username.getText().toString().trim();
+                String pass = password.getText().toString().trim();
                 if (validate(email, pass)) {
                     login(email, pass);
                 } else {
                     Snackbar.make(v, "Opps, some fields are empty !", Snackbar.LENGTH_LONG).show();
                 }
                 break;
+            case R.id.link_to_singup:
+                Intent intent = new Intent(this, SignUpActivity.class);
+                startActivity(intent);
             default:
                 break;
         }

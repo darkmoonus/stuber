@@ -15,6 +15,9 @@ import android.widget.EditText;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,50 +76,46 @@ public class SignUpActivity extends CoreActivity {
     }
 
     public void register(final String name, final String email, final String pass) {
-        RequestParams params = new RequestParams();
-        params.put("username", name);
-        params.put("email", email);
-        params.put("password", pass);
-        showProgressDialog("Signup", "Siging up...");
-        Network.post(Constants.SIGNUP_URL, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getString("status").equals("ok")) {
-                        JSONObject data = response.getJSONObject("data");
-                        String id = data.getString("id");
-                        String username = data.getString("username");
-                        String avatar = data.getString("avatar");
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        intent.putExtra("id", id);
-                        StuberApplication.USER_ID = id;
-                        intent.putExtra("username", username);
-                        intent.putExtra("avatar", avatar);
-                        startActivity(intent);
-                        removePreviousDialog("Signup");
-                    }
-                } catch (JSONException e) {
-                    removePreviousDialog("Signup");
-                    e.printStackTrace();
-                }
-            }
+        final ParseUser user = new ParseUser();
+        user.put(Constants.PROFILE_NAME, name);
+        user.setUsername(email);
+        user.setEmail(email);
+        user.setPassword(pass);
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable e) {
-                removePreviousDialog("Signup");
-                Log.e("onFailure", e.toString());
-                Log.e("errorResponse", errorResponse);
-            }
-        });
+        System.out.println(user);
+        showProgressDialog("Signup", "Registering your account...");
+        user.signUpInBackground(
+                new SignUpCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Hooray! Let them use the app now.
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            intent.putExtra(Constants.PROFILE_ID, user.getObjectId());
+                            intent.putExtra(Constants.PROFILE_USERNAME, user.getUsername());
+                            intent.putExtra(Constants.PROFILE_NAME, user.getString(Constants.PROFILE_NAME));
+                            intent.putExtra(Constants.PROFILE_EMAIl, user.getEmail());
+                            intent.putExtra(Constants.PROFILE_AVATAR_URL, user.getString(Constants.PROFILE_AVATAR_URL));
+//                            startActivity(intent);
+                            removePreviousDialog("Signup");
+                        } else {
+                            // Sign up didn't succeed. Look at the ParseException
+                            // to figure out what went wrong
+                            removePreviousDialog("Signup");
+                            showProgressDialogWithPositiveButton("LoginFailed", e.getMessage());
+                            Log.e("onFailure", e.toString());
+                        }
+                    }
+                }
+        );
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.email_sign_in_button:
-                String name = fullname.getText().toString();
-                String mail = email.getText().toString();
-                String pass = password.getText().toString();
+                String name = fullname.getText().toString().trim();
+                String mail = email.getText().toString().trim();
+                String pass = password.getText().toString().trim();
                 if (validate(name, mail, pass)) {
                     register(name, mail, pass);
                 } else {

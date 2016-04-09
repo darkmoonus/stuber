@@ -16,6 +16,12 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:src="@mipmap/stuber"/>
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"

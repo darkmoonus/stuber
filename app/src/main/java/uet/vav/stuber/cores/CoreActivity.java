@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import uet.vav.stuber.uet.vav.dialogs.DialogProgress;
+import uet.vav.stuber.uet.vav.dialogs.DialogProgressWithPositiveButton;
 
 /**
  * Created by darkmoonus on 4/9/16.
@@ -33,6 +34,18 @@ public abstract class CoreActivity extends AppCompatActivity implements View.OnC
             public void run() {
                 removePreviousDialog(tag);
                 mDialog = DialogProgress.newInstance(CoreActivity.this, msg);
+                mDialog.show(getSupportFragmentManager(), tag);
+            }
+        });
+        return mDialog;
+    }
+
+    public DialogFragment showProgressDialogWithPositiveButton(final String tag, final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                removePreviousDialog(tag);
+                mDialog = DialogProgressWithPositiveButton.newInstance(CoreActivity.this, msg);
                 mDialog.show(getSupportFragmentManager(), tag);
             }
         });

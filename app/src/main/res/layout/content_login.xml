@@ -118,6 +118,7 @@
     </LinearLayout>
 
     <uet.vav.stuber.customizes.MyTextView
+        android:id="@+id/link_to_singup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
