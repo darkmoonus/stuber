@@ -37,7 +37,7 @@
 
         </activity>
         <activity
-            android:name=".activities.LogInActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

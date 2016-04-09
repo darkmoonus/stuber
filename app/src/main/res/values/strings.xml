@@ -10,6 +10,13 @@
     <string name="preferences">Preferences</string>
 
     <string name="title_activity_splash">Stuber</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_fullname">Fullname</string>
+    <string name="prompt_username">Tên đăng nhập</string>
+    <string name="prompt_password">Mật khẩu</string>
 
     <string name="parse_app_id">0G0Lo6u6htsUewbPQ20YjRhUHY64BiJYaZJeKXUT</string>
     <string name="parse_client_key">YuKKiFmp3nl3WLeHhsxvOOdVuw1J7SuyMDh55F6N</string>

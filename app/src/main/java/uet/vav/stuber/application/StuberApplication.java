@@ -11,7 +11,8 @@ import uet.vav.stuber.R;
  * Created by darkmoonus on 4/9/16.
  */
 public class StuberApplication extends Application {
-    private static StuberApplication sInstance;
+    private static StuberApplication mInstance;
+    public static String USER_ID;
 
     @Override
     public void onCreate() {
@@ -29,11 +30,11 @@ public class StuberApplication extends Application {
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
-        sInstance = this;
+        mInstance = this;
     }
 
-    public static StuberApplication getInstance() {
-        return sInstance;
+    public static synchronized StuberApplication getInstance() {
+        return mInstance;
     }
 
     public static Context getAppContext() {
