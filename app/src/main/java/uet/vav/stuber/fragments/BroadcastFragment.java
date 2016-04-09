@@ -2,7 +2,6 @@ package uet.vav.stuber.fragments;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import java.util.List;
 import tokenautocomplete.ContactsCompletionView;
 import tokenautocomplete.ProblemField;
 import uet.vav.stuber.R;
-import uet.vav.stuber.activities.BroadcastingActivity;
 import uet.vav.stuber.activities.MainActivity;
 import uet.vav.stuber.cores.CoreFragment;
 
@@ -63,8 +61,21 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                 } else if (mProblemEditText.getText().length() <= 10) {
                     mActivity.showProgressDialogWithPositiveButton("error", "Your problem must be more than 10 characters!");
                 } else {
-                    Intent intent = new Intent(mActivity, BroadcastingActivity.class);
-                    mActivity.startActivity(intent);
+//                    ParseObject gameScore = new ParseObject("GameScore");
+//                    gameScore.put("score", 1337);
+//                    gameScore.put("playerName", "Sean Plott");
+//                    gameScore.put("cheatMode", false);
+//
+//                    String objectId = gameScore.getObjectId();
+//
+//                    gameScore.saveInBackground(new SaveCallback() {
+//                        @Override
+//                        public void done(ParseException e) {
+////                            Network.get();
+//                            Intent intent = new Intent(mActivity, BroadcastingActivity.class);
+//                            mActivity.startActivity(intent);
+//                        }
+//                    });
                 }
             }
         });
