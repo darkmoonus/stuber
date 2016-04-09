@@ -1,0 +1,51 @@
+package tokenautocomplete;
+
+import android.app.Activity;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.tokenautocomplete.TokenCompleteTextView;
+
+import uet.vav.stuber.R;
+
+/**
+ * Sample token completion view for basic contact info
+ * <p/>
+ * Created on 9/12/13.
+ *
+ * @author mgod
+ */
+public class ContactsCompletionView extends TokenCompleteTextView<ProblemField> {
+
+    public ContactsCompletionView(Context context) {
+        super(context);
+    }
+
+    public ContactsCompletionView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ContactsCompletionView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    @Override
+    protected View getViewForObject(ProblemField tag) {
+
+        LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LinearLayout view = (LinearLayout) l.inflate(R.layout.tag_token, (ViewGroup) ContactsCompletionView.this.getParent(), false);
+        ((TextView) view.findViewById(R.id.name)).setText(tag.getName());
+
+        return view;
+    }
+
+    @Override
+    protected ProblemField defaultObject(String completionText) {
+        return new ProblemField(-1, completionText);
+    }
+}

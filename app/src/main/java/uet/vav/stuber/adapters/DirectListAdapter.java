@@ -47,7 +47,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
         holder.name.setText(u.getName());
         holder.skills.setText(u.getSkills());
         holder.price.setText(String.valueOf(u.getHireRate()));
-        holder.rating.setRating((float) dataSet.get(position).getRating());
+        holder.rating.setText(u.getRating() + "/5");
         holder.rating.invalidate();
         holder.hire.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +104,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
     public class DataObjectHolder extends RecyclerView.ViewHolder {
         private ImageView avatar, state;
         private MyTextView name, price, skills;
-        private RatingBar rating;
+        private MyTextView rating;
         private MyTextView hire;
         private LinearLayout report;
         private CardView card;
@@ -116,7 +116,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
             name = (MyTextView) itemView.findViewById(R.id.name);
             price = (MyTextView) itemView.findViewById(R.id.price);
             skills = (MyTextView) itemView.findViewById(R.id.skills);
-            rating = (RatingBar) itemView.findViewById(R.id.rating);
+            rating = (MyTextView) itemView.findViewById(R.id.rating);
             hire = (MyTextView) itemView.findViewById(R.id.hire);
             report = (LinearLayout) itemView.findViewById(R.id.report);
             card = (CardView) itemView.findViewById(R.id.card);
