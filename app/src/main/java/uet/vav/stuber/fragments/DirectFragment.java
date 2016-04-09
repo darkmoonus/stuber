@@ -4,28 +4,35 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.activities.MainActivity;
 import uet.vav.stuber.adapters.DirectListAdapter;
 import uet.vav.stuber.cores.CoreFragment;
 import uet.vav.stuber.models.User;
+import uet.vav.stuber.utils.Constants;
 
 public class DirectFragment extends CoreFragment implements Serializable {
 
     private UltimateRecyclerView mDirectListView;
     private DirectListAdapter mDirectListAdapter;
     private LinearLayout mEmptyView;
-    private ArrayList<User> mUserList;
+    private ArrayList<User> mUserList = new ArrayList<>();
     private int limit = 10;
     private int page = 1;
 
@@ -36,6 +43,9 @@ public class DirectFragment extends CoreFragment implements Serializable {
         initListener();
         initModels();
         initAnimations();
+
+        initListView();
+        loadData(page, limit);
         return view;
     }
 
@@ -54,39 +64,47 @@ public class DirectFragment extends CoreFragment implements Serializable {
         mDirectListView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                page = 1;
+//                loadData(page, limit);
             }
         });
-
-//        mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-//            @Override
-//            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-//                if (scrollY > mScroll) {
-//                    mAddRoom.hide();
-//                } else {
-//                    mAddRoom.show();
-//                }
-//                mScroll = scrollY;
-//            }
-//            @Override
-//            public void onDownMotionEvent() {
-//
-//            }
-//            @Override
-//            public void onUpOrCancelMotionEvent(ObservableScrollState observableScrollState) {
-//                if (observableScrollState == ObservableScrollState.DOWN) {
-//                    loge("End Down");
-//                } else if (observableScrollState == ObservableScrollState.UP) {
-//                    loge("End Up");
-//                } else if (observableScrollState == ObservableScrollState.STOP) {
-//                    loge("Stop");
-//                }
-//            }
-//        });
     }
 
     public void loadData(int page, int limit) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> userObjects, ParseException error) {
+                if (userObjects != null) {
+                    mDirectListAdapter.clearData();
+                    for (int i = 0; i < userObjects.size(); i++) {
+                        ParseUser pu = userObjects.get(i);
+                        String id = pu.getObjectId();
+                        String email = pu.getString(Constants.PROFILE_EMAIl);
+                        String name = pu.getString(Constants.PROFILE_NAME);
+                        String skills = pu.getString(Constants.PROFILE_SKILLS);
+                        String experience = pu.getString(Constants.PROFILE_EXPERIENCE);
+                        double hireRate = pu.getDouble(Constants.PROFILE_HIRERATE);
+                        String address = pu.getString(Constants.PROFILE_ADRESS);
+                        String project = pu.getString(Constants.PROFILE_PROJECTS);
+                        double rating = pu.getDouble(Constants.PROFILE_RATING);
+                        int age = pu.getInt("Old");
+                        User u = new User(id, name, email, age, address, skills, rating, hireRate, experience, project);
+                        mDirectListAdapter.addItem(u);
+                    }
 
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mEmptyView.setVisibility(View.GONE);
+                            mDirectListView.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } else {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -95,31 +113,7 @@ public class DirectFragment extends CoreFragment implements Serializable {
 
     @Override
     protected void initModels() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(500);
-                    mUserList = new ArrayList<>();
-                    mUserList.add(new User("1", "Vũ Việt Anh", "hunter@darkmoon.us", 22, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội", "Android, Java, C++, MySQL", 2.87, 17.5, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL 175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL", "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL"));
-                    mUserList.add(new User("1", "Vũ Việt Anh", "hunter@darkmoon.us", 22, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội", "Android, Java, C++, MySQL", 2.87, 17.5, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL 175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL", "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL"));
-                    mUserList.add(new User("1", "Vũ Việt Anh", "hunter@darkmoon.us", 22, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội", "Android, Java, C++, MySQL", 3.87, 17.5, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL 175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL", "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL"));
-                    mUserList.add(new User("1", "Vũ Việt Anh", "hunter@darkmoon.us", 22, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội", "Android, Java, C++, MySQL", 1.87, 17.5, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL 175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL", "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL"));
-                    mUserList.add(new User("1", "Vũ Việt Anh", "hunter@darkmoon.us", 22, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội", "Android, Java, C++, MySQL", 3.87, 17.5, "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL 175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL", "175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL175 Xuân Thuỷ, Cầu Giấy, Hà Nội\", \"Android, Java, C++, MySQL"));
-                    loadData(page, limit);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mEmptyView.setVisibility(View.GONE);
-                        mDirectListView.setVisibility(View.VISIBLE);
-                        initListView();
-                    }
-                });
-            }
-        }).start();
+
     }
 
     @Override

@@ -77,8 +77,8 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
     }
 
     public void addItem(User dataObj) {
-        dataSet.add(0, dataObj);
-        notifyItemInserted(0);
+        dataSet.add(dataObj);
+        notifyItemInserted(dataSet.size()-1);
     }
 
     public void deleteItem(int index) {
@@ -89,7 +89,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
     }
 
     public void clearData() {
-        dataSet.clear();
+        dataSet = new ArrayList<>();
     }
 
     public User getItem(int index) {
