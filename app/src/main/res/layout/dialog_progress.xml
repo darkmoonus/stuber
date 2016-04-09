@@ -13,7 +13,7 @@
         android:layout_height="60dp" />
 
     <uet.vav.stuber.customizes.MyTextView
-        android:id="@+id/dialog_progress_content"
+        android:id="@+id/dialog_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
