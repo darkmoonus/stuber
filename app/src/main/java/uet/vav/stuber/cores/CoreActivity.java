@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import uet.vav.stuber.uet.vav.dialogs.DialogProgress;
+import uet.vav.stuber.dialogs.DialogProgress;
 
 /**
  * Created by darkmoonus on 4/9/16.
