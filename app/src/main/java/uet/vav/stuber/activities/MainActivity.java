@@ -1,16 +1,11 @@
 package uet.vav.stuber.activities;
 
-import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -41,14 +36,6 @@ public class MainActivity extends CoreActivity {
         initModels();
         initListeners();
         initAnimations();
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor(int colorId) {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(colorId));
     }
 
     @Override
