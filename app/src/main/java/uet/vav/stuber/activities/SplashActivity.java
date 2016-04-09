@@ -33,17 +33,6 @@ public class SplashActivity extends CoreActivity {
 
         setContentView(R.layout.activity_splash);
 
-        final ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Toast.makeText(StuberApplication.getAppContext(), testObject.getObjectId(), Toast.LENGTH_LONG).show();
-                Log.wtf(LOG_TAG, testObject.getString("foo"));
-            }
-        });
-
-        System.err.println(testObject);
         initViews();
         initModels();
         initListeners();
