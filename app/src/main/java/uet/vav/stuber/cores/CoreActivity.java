@@ -9,12 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
 import com.parse.ParseUser;
-import uet.vav.stuber.activities.LoginActivity;
-import uet.vav.stuber.activities.MainActivity;
-import uet.vav.stuber.application.StuberApplication;
-import uet.vav.stuber.uet.vav.dialogs.DialogProgress;
+import uet.vav.stuber.dialogs.DialogProgress;
 import uet.vav.stuber.uet.vav.dialogs.DialogProgressWithPositiveButton;
 import uet.vav.stuber.utils.Constants;
 

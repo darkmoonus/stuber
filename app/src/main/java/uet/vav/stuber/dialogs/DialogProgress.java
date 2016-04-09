@@ -1,4 +1,4 @@
-package uet.vav.stuber.uet.vav.dialogs;
+package uet.vav.stuber.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
