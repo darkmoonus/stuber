@@ -46,6 +46,10 @@
             android:name=".activities.UserDetailActivity"
             android:label="@string/title_activity_user_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.BroadcastingActivity"
+            android:label="@string/title_activity_broadcasting"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -37,6 +37,7 @@ public class SettingsFragment extends CoreFragment implements Serializable {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_log_out:
+                mActivity.showProgressDialog("Logout", "Logging out...");
                 ParseUser.logOutInBackground(new LogOutCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -47,6 +48,7 @@ public class SettingsFragment extends CoreFragment implements Serializable {
                         } else {
                             Log.wtf(LOG_TAG, "Can not log out!");
                         }
+                        mActivity.removePreviousDialog("Logout");
                     }
                 });
                 break;

@@ -123,5 +123,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="btn_log_out">Log out</string>
+    <string name="title_activity_broadcasting">BroadcastingActivity</string>
 
 </resources>
