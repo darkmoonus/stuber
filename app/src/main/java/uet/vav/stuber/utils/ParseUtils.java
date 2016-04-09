@@ -13,10 +13,6 @@ import com.parse.ParsePush;
 import com.parse.SaveCallback;
 
 import uet.vav.stuber.R;
-
-/**
- * Created by Ravi on 01/06/15.
- */
 public class ParseUtils {
 
     private static String TAG = ParseUtils.class.getSimpleName();
@@ -46,6 +42,15 @@ public class ParseUtils {
 
         installation.put("email", email);
 
-        installation.saveInBackground();
+        installation.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    e.printStackTrace();
+                } else {
+                    Log.e(TAG, "Successfully subscribed to Parse with email!");
+                }
+            }
+        });
     }
 }

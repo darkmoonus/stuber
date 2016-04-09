@@ -20,10 +20,6 @@ import java.util.List;
 
 import uet.vav.stuber.R;
 
-
-/**
- * Created by Ravi on 01/06/15.
- */
 public class NotificationUtils {
 
     private String TAG = NotificationUtils.class.getSimpleName();

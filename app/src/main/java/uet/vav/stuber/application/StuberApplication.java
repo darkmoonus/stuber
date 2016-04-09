@@ -5,7 +5,8 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseUser;
+
+import uet.vav.stuber.utils.ParseUtils;
 
 /**
  * Created by darkmoonus on 4/9/16.
@@ -23,7 +24,8 @@ public class StuberApplication extends Application {
         Parse.enableLocalDatastore(this);
 
         // Add your initialization code here
-        Parse.initialize(this);
+//        Parse.initialize(this);
+        ParseUtils.registerParse(this);
 
         // Anonymously use application
         //ParseUser.enableAutomaticUser();
