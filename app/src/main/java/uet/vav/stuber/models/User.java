@@ -16,6 +16,7 @@ public class User implements Serializable {
     private double hireRate;
     private String experiences;
     private String projects;
+    public int randomTag;
 
     public User() {
 
