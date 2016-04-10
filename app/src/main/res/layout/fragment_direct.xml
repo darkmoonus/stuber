@@ -20,9 +20,9 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <ProgressBar
-            android:layout_marginTop="5dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+        <uet.vav.stuber.customizes.MyGifView
+            android:id="@+id/progressLoading"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
     </LinearLayout>
 </FrameLayout>

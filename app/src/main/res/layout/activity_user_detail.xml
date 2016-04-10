@@ -85,7 +85,7 @@
                         android:numStars="5"
                         android:scaleX="0.8"
                         android:scaleY="0.8"
-                        android:stepSize="0.1" />
+                        android:stepSize="0.01" />
 
                     <uet.vav.stuber.customizes.MyTextView
                         android:id="@+id/ratingHire"
@@ -323,13 +323,15 @@
             <LinearLayout
                 android:id="@+id/loadingLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ProgressBar
-                    android:layout_width="35dp"
-                    android:layout_height="35dp" />
+                <uet.vav.stuber.customizes.MyGifView
+                    android:id="@+id/progressLoading"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
             </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

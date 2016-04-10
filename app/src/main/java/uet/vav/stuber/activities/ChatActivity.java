@@ -15,9 +15,8 @@ import uet.vav.stuber.cores.CoreActivity;
 
 public class ChatActivity extends CoreActivity {
 
-    private ActionBar actionBar;
+//    private ActionBar actionBar;
     private String userID, partnerId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +30,18 @@ public class ChatActivity extends CoreActivity {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setHomeButtonEnabled(true);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("uid");
+        partnerId = intent.getStringExtra("pid");
+        setStatusBarColor(R.color.conversation_chat);
+//        actionBar.setTitle(userID);
     }
 
     private void loadConversation() {
@@ -61,11 +65,7 @@ public class ChatActivity extends CoreActivity {
     @Override
     public void initModels() {
         setupToolbar();
-        Intent intent = getIntent();
-        userID = intent.getStringExtra("uid");
-        partnerId = intent.getStringExtra("pid");
-        setStatusBarColor(R.color.colorPrimary);
-        actionBar.setTitle(userID);
+
     }
 
 
@@ -79,14 +79,14 @@ public class ChatActivity extends CoreActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                finish();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

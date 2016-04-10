@@ -28,6 +28,7 @@ import java.util.List;
 import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
+import uet.vav.stuber.customizes.MyGifView;
 import uet.vav.stuber.customizes.MyTextView;
 import uet.vav.stuber.models.User;
 import uet.vav.stuber.utils.Constants;
@@ -46,6 +47,8 @@ public class UserDetailActivity extends CoreActivity {
     private MyTextView tvExperiences;
     private MyTextView tvProject;
     private LinearLayout contentLayout, loadingLayout;
+    protected MyGifView mLoadingView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,38 +64,48 @@ public class UserDetailActivity extends CoreActivity {
     }
 
     public void loadUserData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.whereEqualTo("objectId", userID);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        new Thread(new Runnable() {
             @Override
-            public void done(List<ParseObject> objects, com.parse.ParseException e) {
-                if (e == null) {
-                    ParseObject object = objects.get(0);
-                    String email = object.getString(Constants.PROFILE_EMAIl);
-                    String skills = object.getString(Constants.PROFILE_SKILLS);
-                    String experience = object.getString(Constants.PROFILE_EXPERIENCE);
-                    double hireRate = object.getDouble(Constants.PROFILE_HIRERATE);
-                    String address = object.getString(Constants.PROFILE_ADRESS);
-                    String project = object.getString(Constants.PROFILE_PROJECTS);
-                    double ratingX = object.getDouble(Constants.PROFILE_RATING);
-
-                    tvRatingString.setText(ratingX + "/5.0");
-                    tvRateHire.setText(hireRate + "$/hr");
-                    tvAddress.setText(address);
-                    tvProject.setText(project);
-                    tvExperiences.setText(experience);
-                    tvSkills.setText(skills);
-                    tvEmail.setText(email);
-                    rating.setRating((float) ratingX);
-                    LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
-                    stars.getDrawable(2).setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
-                    loadingLayout.setVisibility(View.GONE);
-                    contentLayout.setVisibility(View.VISIBLE);
-                } else {
-                    // error
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                query.whereEqualTo("objectId", userID);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                        if (e == null) {
+                            ParseObject object = objects.get(0);
+                            String email = object.getString("email");
+                            String skills = object.getString(Constants.PROFILE_SKILLS);
+                            String experience = object.getString(Constants.PROFILE_EXPERIENCE);
+                            double hireRate = object.getDouble(Constants.PROFILE_HIRERATE);
+                            String address = object.getString(Constants.PROFILE_ADRESS);
+                            String project = object.getString(Constants.PROFILE_PROJECTS);
+                            double ratingX = object.getDouble(Constants.PROFILE_RATING);
+
+                            tvRatingString.setText(ratingX + "/5.0");
+                            tvRateHire.setText(hireRate + "$/hr");
+                            tvAddress.setText(address);
+                            tvProject.setText(project);
+                            tvExperiences.setText(experience);
+                            tvSkills.setText(skills);
+                            tvEmail.setText(email);
+                            rating.setRating((float) ratingX);
+                            LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+                            stars.getDrawable(2).setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                            loadingLayout.setVisibility(View.GONE);
+                            contentLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            // error
+                        }
+                    }
+                });
             }
-        });
+        }).start();
     }
 
     private void setupToolbar() {
@@ -135,12 +148,13 @@ public class UserDetailActivity extends CoreActivity {
         tvExperiences = (MyTextView) findViewById(R.id.experience);
         contentLayout = (LinearLayout) findViewById(R.id.content);
         loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+        mLoadingView = (MyGifView) findViewById(R.id.progressLoading);
     }
 
     @Override
     public void initModels() {
         setupToolbar();
-
+        mLoadingView.setMovieResource(R.mipmap.progress);
     }
 
     @Override
