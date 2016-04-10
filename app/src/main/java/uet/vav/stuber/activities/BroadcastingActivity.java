@@ -1,6 +1,7 @@
 package uet.vav.stuber.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,6 +19,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.cores.CoreActivity;
@@ -41,6 +46,7 @@ public class BroadcastingActivity extends CoreActivity implements
     private boolean mPermissionDenied = false;
 
     private GoogleMap mMap;
+    private String mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,9 @@ public class BroadcastingActivity extends CoreActivity implements
                 finish();
             }
         });
+
+        Intent intent = getIntent();
+        mData = intent.getExtras().getString("data");
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -92,8 +101,6 @@ public class BroadcastingActivity extends CoreActivity implements
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-
-//        mMap.setOnMyLocationButtonClickListener(this);
         map.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -107,24 +114,20 @@ public class BroadcastingActivity extends CoreActivity implements
         });
         enableMyLocation();
 
-
-        // Fake 1
-        mMap.addMarker(getMarker(new LatLng(21.016493, 105.859268)));
-        mMap.addMarker(getMarker(new LatLng(21.014872, 105.863225)));
-        mMap.addMarker(getMarker(new LatLng(21.016905, 105.864810)));
-        mMap.addMarker(getMarker(new LatLng(21.009281, 105.857159)));
-        mMap.addMarker(getMarker(new LatLng(21.012795, 105.858358)));
-        mMap.addMarker(getMarker(new LatLng(21.007551, 105.867084)));
-        mMap.addMarker(getMarker(new LatLng(21.002953, 105.861241)));
-
-//                    // Fake 2
-//                    mMap.addMarker(getMarker(new LatLng(21.016493, 105.859268)));
-//                    mMap.addMarker(getMarker(new LatLng(21.014872, 105.863225)));
-//                    mMap.addMarker(getMarker(new LatLng(21.016905, 105.864810)));
-//                    mMap.addMarker(getMarker(new LatLng(21.009281, 105.857159)));
-//                    mMap.addMarker(getMarker(new LatLng(21.012795, 105.858358)));
-//                    mMap.addMarker(getMarker(new LatLng(21.007551, 105.867084)));
-//                    mMap.addMarker(getMarker(new LatLng(21.002953, 105.861241)));
+        if (mData != null) {
+            try {
+                JSONObject rootObject = new JSONObject(mData);
+                JSONArray results = rootObject.getJSONArray("result");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject result = results.getJSONObject(i);
+                    if (!result.equals("null")) {
+                        mMap.addMarker(getMarker(new LatLng(result.getDouble("latitude"), result.getDouble("longitude"))));
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public MarkerOptions getMarker(LatLng point)

@@ -60,6 +60,7 @@
                 android:padding="5dp">
 
                 <uet.vav.stuber.customizes.MyTextView
+                    android:id="@+id/tvRating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -69,6 +70,7 @@
                     android:textSize="25dp" />
 
                 <RatingBar
+                    android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
@@ -77,6 +79,7 @@
                     android:stepSize="0.1" />
 
                 <uet.vav.stuber.customizes.MyTextView
+                    android:id="@+id/ratingHire"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -128,6 +131,7 @@
                             android:src="@mipmap/email" />
 
                         <uet.vav.stuber.customizes.MyTextView
+                            android:id="@+id/email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -152,6 +156,7 @@
                             android:src="@mipmap/location" />
 
                         <uet.vav.stuber.customizes.MyTextView
+                            android:id="@+id/address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -200,6 +205,7 @@
                         android:orientation="horizontal">
 
                         <uet.vav.stuber.customizes.MyTextView
+                            android:id="@+id/skills"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -251,6 +257,7 @@
                         android:textSize="20dp" />
 
                     <uet.vav.stuber.customizes.MyTextView
+                        android:id="@+id/experience"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -291,6 +298,7 @@
                         android:textSize="20dp" />
 
                     <uet.vav.stuber.customizes.MyTextView
+                        android:id="@+id/projects"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

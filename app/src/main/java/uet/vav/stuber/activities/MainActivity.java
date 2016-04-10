@@ -21,6 +21,7 @@ import uet.vav.stuber.fragments.BroadcastFragment;
 import uet.vav.stuber.fragments.DirectFragment;
 import uet.vav.stuber.fragments.NotificationsFragment;
 import uet.vav.stuber.fragments.SettingsFragment;
+import uet.vav.stuber.utils.ParseUtils;
 
 public class MainActivity extends CoreActivity {
     private Fragment currentFragment;
@@ -39,6 +40,7 @@ public class MainActivity extends CoreActivity {
         initModels();
         initListeners();
         initAnimations();
+
     }
 
 

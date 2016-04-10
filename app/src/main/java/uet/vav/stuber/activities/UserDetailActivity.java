@@ -11,11 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 
+import com.parse.GetCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.text.ParseException;
+
 import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 import uet.vav.stuber.customizes.MyTextView;
 import uet.vav.stuber.models.User;
+import uet.vav.stuber.utils.Constants;
 
 public class UserDetailActivity extends CoreActivity {
 
@@ -28,6 +36,7 @@ public class UserDetailActivity extends CoreActivity {
     private MyTextView tvRateHire;
     private MyTextView tvEmail;
     private MyTextView tvAddress;
+    private MyTextView tvSkills;
     private MyTextView tvExperiences;
     private MyTextView tvProject;
 
@@ -46,7 +55,35 @@ public class UserDetailActivity extends CoreActivity {
     }
 
     public void loadUserData() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+        query.getInBackground(userID, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, com.parse.ParseException e) {
+                if (e == null) {
+                    String id = object.getObjectId();
+                    String email = object.getString(Constants.PROFILE_EMAIl);
+                    String name = object.getString(Constants.PROFILE_NAME);
+                    String skills = object.getString(Constants.PROFILE_SKILLS);
+                    String experience = object.getString(Constants.PROFILE_EXPERIENCE);
+                    double hireRate = object.getDouble(Constants.PROFILE_HIRERATE);
+                    String address = object.getString(Constants.PROFILE_ADRESS);
+                    String project = object.getString(Constants.PROFILE_PROJECTS);
+                    double ratingX = object.getDouble(Constants.PROFILE_RATING);
+                    int age = object.getInt("Old");
 
+                    tvRatingString.setText(rating + "");
+                    tvRateHire.setText(hireRate + "/hr");
+                    tvAddress.setText(address);
+                    tvProject.setText(project);
+                    tvExperiences.setText(experience);
+                    tvSkills.setText(skills);
+                    tvEmail.setText(email);
+                    rating.setRating((float) ratingX);
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setupToolbar() {
@@ -75,6 +112,14 @@ public class UserDetailActivity extends CoreActivity {
     @Override
     public void initViews() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        rating = (RatingBar) findViewById(R.id.ratingBar);
+        tvRatingString = (MyTextView) findViewById(R.id.tvRating);
+        tvRateHire = (MyTextView) findViewById(R.id.ratingHire);
+        tvEmail = (MyTextView) findViewById(R.id.email);
+        tvAddress = (MyTextView) findViewById(R.id.address);
+        tvSkills = (MyTextView) findViewById(R.id.skills);
+        tvProject = (MyTextView) findViewById(R.id.projects);
+        tvExperiences = (MyTextView) findViewById(R.id.experience);
     }
 
     @Override
