@@ -12,7 +12,7 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import uet.vav.stuber.activities.SplashActivity;
+import uet.vav.stuber.activities.PairedActivity;
 import uet.vav.stuber.utils.NotificationUtils;
 
 
@@ -66,16 +66,21 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
      */
     private void parsePushJson(Context context, JSONObject json) {
         try {
-            boolean isBackground = json.getBoolean("is_background");
+//            boolean isBackground = json.getBoolean("is_background");
             JSONObject data = json.getJSONObject("data");
-            String title = data.getString("title");
+            String title = data.getString("alert");
             String message = data.getString("message");
 
-            if (!isBackground) {
-                Intent resultIntent = new Intent(context, SplashActivity.class);
-                showNotificationMessage(context, title, message, resultIntent);
+            String[] tokens = message.split("|");
+            if (tokens.length == 2) {
+                String userEmail = tokens[0];
+                String questionId = tokens[1];
+
+
             }
 
+            Intent resultIntent = new Intent(context, PairedActivity.class);
+            showNotificationMessage(context, "Stuber", title, resultIntent);
         } catch (JSONException e) {
             Log.e(TAG, "Push message json exception: " + e.getMessage());
         }
@@ -92,16 +97,10 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
      * @param intent
      */
     private void showNotificationMessage(Context context, String title, String message, Intent intent) {
-        String[] tokens = message.split("|");
-        if (tokens.length == 2) {
-            String userEmail = tokens[0];
-            String questionId = tokens[1];
-
-        }
 
         notificationUtils = new NotificationUtils(context);
         intent.putExtras(parseIntent.getExtras());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(title, "You have a broadcasting message from Stuber.", intent);
+        notificationUtils.showNotificationMessage(title, message, intent);
     }
 }

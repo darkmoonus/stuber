@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
 import uet.vav.stuber.R;
-import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 import uet.vav.stuber.fragments.BroadcastFragment;
 import uet.vav.stuber.fragments.DirectFragment;
@@ -41,6 +41,7 @@ public class MainActivity extends CoreActivity {
         initListeners();
         initAnimations();
 
+        ParseUtils.subscribeWithEmail(ParseUser.getCurrentUser().getEmail());
     }
 
 
