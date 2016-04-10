@@ -92,13 +92,16 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
      * @param intent
      */
     private void showNotificationMessage(Context context, String title, String message, Intent intent) {
+        String[] tokens = message.split("|");
+        if (tokens.length == 2) {
+            String userEmail = tokens[0];
+            String questionId = tokens[1];
+
+        }
 
         notificationUtils = new NotificationUtils(context);
-
         intent.putExtras(parseIntent.getExtras());
-
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        notificationUtils.showNotificationMessage(title, message, intent);
+        notificationUtils.showNotificationMessage(title, "You have a broadcasting message from Stuber.", intent);
     }
 }

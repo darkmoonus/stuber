@@ -69,7 +69,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                 } else if (mProblemEditText.getText().length() <= 10) {
                     mActivity.showProgressDialogWithPositiveButton("error", "Your problem must be more than 10 characters!");
                 } else {
-                    mActivity.showProgressDialog("loading", "Broadcast message is sending...");
+                    mActivity.showProgressDialog("loading", "Message is broadcasting...");
 
                     ParseObject broadcastRequest = new ParseObject("Question");
                     broadcastRequest.put("fields", mAddedFields.toString());
@@ -95,7 +95,6 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
 
                                         @Override
                                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
                                             mActivity.removePreviousDialog("loading");
                                             mActivity.showProgressDialogWithPositiveButton("error", new String(responseBody));
                                         }
