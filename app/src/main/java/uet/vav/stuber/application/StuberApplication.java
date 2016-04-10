@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseUser;
 
 /**
  * Created by darkmoonus on 4/9/16.
@@ -32,7 +31,6 @@ public class StuberApplication extends Application {
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-
         mInstance = this;
     }
 

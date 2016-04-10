@@ -1,11 +1,13 @@
 package uet.vav.stuber.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -13,6 +15,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import java.util.ArrayList;
 
 import uet.vav.stuber.R;
+import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 import uet.vav.stuber.fragments.BroadcastFragment;
 import uet.vav.stuber.fragments.DirectFragment;
@@ -36,6 +39,14 @@ public class MainActivity extends CoreActivity {
         initModels();
         initListeners();
         initAnimations();
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String message = intent.getStringExtra("message");
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
