@@ -19,7 +19,7 @@ import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
-public class LoginActivity extends CoreActivity {
+public class LogInActivity extends CoreActivity {
     private final static String LOG_TAG = "LoginActivity";
 
     private Button loginButton;

@@ -19,7 +19,6 @@ import com.parse.ParseUser;
 import uet.vav.stuber.dialogs.DialogProgress;
 import uet.vav.stuber.uet.vav.dialogs.DialogProgressWithPositiveButton;
 import uet.vav.stuber.utils.Constants;
-import uet.vav.stuber.utils.ParseUtils;
 
 /**
  * Created by darkmoonus on 4/9/16.
