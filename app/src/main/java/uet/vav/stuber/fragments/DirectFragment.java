@@ -19,6 +19,7 @@ import com.parse.ParseUser;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.activities.MainActivity;
@@ -100,6 +101,7 @@ public class DirectFragment extends CoreFragment implements Serializable {
                                 double rating = pu.getDouble(Constants.PROFILE_RATING);
                                 int age = pu.getInt("Old");
                                 User u = new User(id, name, email, age, address, skills, rating, hireRate, experience, project);
+                                u.randomTag = (int) Math.random() * 8 + 1;
                                 mDirectListAdapter.addItem(u);
                             }
 

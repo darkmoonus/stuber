@@ -17,10 +17,11 @@ import uet.vav.stuber.R;
 import uet.vav.stuber.activities.MainActivity;
 import uet.vav.stuber.activities.SplashActivity;
 import uet.vav.stuber.cores.CoreFragment;
+import uet.vav.stuber.customizes.MyTextView;
 
 public class SettingsFragment extends CoreFragment implements Serializable {
     private static final String LOG_TAG = "SettingsFragment";
-    private Button mBtnLogout;
+    private MyTextView mBtnLogout;
     private View view;
 
     @Override
@@ -61,7 +62,7 @@ public class SettingsFragment extends CoreFragment implements Serializable {
 
     @Override
     protected void initViews(View v) {
-        mBtnLogout = (Button) view.findViewById(R.id.btn_log_out);
+        mBtnLogout = (MyTextView) view.findViewById(R.id.btn_log_out);
     }
 
     @Override

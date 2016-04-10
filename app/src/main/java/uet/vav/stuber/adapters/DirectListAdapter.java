@@ -48,6 +48,37 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
         holder.skills.setText(u.getSkills());
         holder.price.setText(String.valueOf(u.getHireRate()) + "$/hr");
         holder.rating.setText("Rating: " + u.getRating() + "/5.0");
+
+        switch (u.randomTag) {
+            case 1:
+                holder.avatar.setImageResource(R.mipmap.avatar_1);
+                break;
+            case 2:
+                holder.avatar.setImageResource(R.mipmap.avatar_2);
+                break;
+            case 3:
+                holder.avatar.setImageResource(R.mipmap.avatar_3);
+                break;
+            case 4:
+                holder.avatar.setImageResource(R.mipmap.avatar_4);
+                break;
+            case 5:
+                holder.avatar.setImageResource(R.mipmap.avatar_5);
+                break;
+            case 6:
+                holder.avatar.setImageResource(R.mipmap.avatar_6);
+                break;
+            case 7:
+                holder.avatar.setImageResource(R.mipmap.avatar_7);
+                break;
+            case 8:
+                holder.avatar.setImageResource(R.mipmap.avatar_8);
+                break;
+            default:
+                holder.avatar.setImageResource(R.mipmap.roundavatar);
+                break;
+        }
+
         holder.rating.invalidate();
         holder.hire.setOnClickListener(new View.OnClickListener() {
             @Override
