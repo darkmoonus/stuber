@@ -60,6 +60,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, UserDetailActivity.class);
                 intent.putExtra("uid", dataSet.get(position).getId());
+                intent.putExtra("name", dataSet.get(position).getName());
                 mActivity.startActivity(intent);
             }
         });
