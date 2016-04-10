@@ -4,6 +4,7 @@ package uet.vav.stuber.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.tokenautocomplete.FilteredArrayAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import tokenautocomplete.ContactsCompletionView;
 import tokenautocomplete.ProblemField;
 import uet.vav.stuber.R;
@@ -73,32 +78,63 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
 
                     ParseObject broadcastRequest = new ParseObject("Question");
                     broadcastRequest.put("fields", mAddedFields.toString());
-                    broadcastRequest.put("problem", mProblemEditText.getText().toString());
+                    broadcastRequest.put("question", mProblemEditText.getText().toString());
+                    broadcastRequest.put("sender", ParseUser.getCurrentUser().getEmail());
 
-                    String questionId = broadcastRequest.getObjectId();
-                    final RequestParams params = new RequestParams();
-                    params.add("question", questionId);
+                    final String questionId = broadcastRequest.getObjectId();
 
                     broadcastRequest.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(com.parse.ParseException e) {
-                            Network.postQuestion("https://api.parse.com/1/functions/getUsersGeoPoint", params,
-                                    new AsyncHttpResponseHandler() {
-                                        @Override
-                                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                            mActivity.removePreviousDialog("loading");
+                            try {
+                                JSONObject data = new JSONObject();
+                                data.put("fields", mAddedFields.toString());
+                                data.put("question", questionId);
+                                data.put("sender", ParseUser.getCurrentUser().getEmail());
+                                HttpEntity entity = new StringEntity(data.toString());
 
-                                            Intent intent = new Intent(mContext, BroadcastingActivity.class);
-                                            intent.putExtra("data", new String(responseBody));
-                                            startActivity(intent);
-                                        }
+                                Network.post(mActivity, "https://api.parse.com/1/functions/getUsersGeoPoint",
+                                        entity, new AsyncHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                                Log.d("onSuccess", new String(responseBody));
 
-                                        @Override
-                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                            mActivity.removePreviousDialog("loading");
-                                            mActivity.showProgressDialogWithPositiveButton("error", new String(responseBody));
-                                        }
-                                    });
+                                                mActivity.removePreviousDialog("loading");
+
+                                                Intent intent = new Intent(mContext, BroadcastingActivity.class);
+                                                intent.putExtra("data", new String(responseBody));
+                                                startActivity(intent);
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                mActivity.showProgressDialogWithPositiveButton("error", new String(responseBody));
+                                                Log.d("onFailure", new String(responseBody));
+                                            }
+                                        });
+
+                            } catch (Exception ae) {
+                                ae.printStackTrace();
+                            }
+
+
+//                            Network.postQuestion("https://api.parse.com/1/functions/getUsersGeoPoint", params,
+//                                    new AsyncHttpResponseHandler() {
+//                                        @Override
+//                                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                                            mActivity.removePreviousDialog("loading");
+//
+//                                            Intent intent = new Intent(mContext, BroadcastingActivity.class);
+//                                            intent.putExtra("data", new String(responseBody));
+//                                            startActivity(intent);
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                                            mActivity.removePreviousDialog("loading");
+//                                            mActivity.showProgressDialogWithPositiveButton("error", new String(responseBody));
+//                                        }
+//                                    });
                         }
                     });
                 }

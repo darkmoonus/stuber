@@ -71,10 +71,15 @@ public class NotificationUtils {
             NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(mNotificationId, notification);
         } else {
-            intent.putExtra("title", title);
-            intent.putExtra("message", message);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            mContext.startActivity(intent);
+//            intent.putExtra("title", title);
+//            intent.putExtra("message", message);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            mContext.startActivity(intent);
+            Intent pushIntent = new Intent();
+            pushIntent.setClassName(mContext, "uet.vav.stuber.activities.PairedActivity");
+            pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pushIntent.putExtra("data", intent.getExtras().getString("com.parse.Data"));
+            mContext.startActivity(pushIntent);
         }
     }
 

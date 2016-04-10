@@ -40,7 +40,7 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
             Intent pushIntent = new Intent();
             pushIntent.setClassName(context, "uet.vav.stuber.activities.PairedActivity");
             pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pushIntent.putExtra("data", intent.getExtras().getString("com.parse.Data"));
+            pushIntent.putExtra("message", intent.getExtras().getString("com.parse.Data"));
             context.startActivity(pushIntent);
 
 //            parseIntent = intent;
