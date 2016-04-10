@@ -12,7 +12,6 @@ import com.parse.ParsePushBroadcastReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import uet.vav.stuber.activities.PairedActivity;
 import uet.vav.stuber.utils.NotificationUtils;
 
 
@@ -38,10 +37,15 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
 
             Log.e(TAG, "Push received: " + json);
+            Intent pushIntent = new Intent();
+            pushIntent.setClassName(context, "uet.vav.stuber.activities.PairedActivity");
+            pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pushIntent.putExtra("data", intent.getExtras().getString("com.parse.Data"));
+            context.startActivity(pushIntent);
 
-            parseIntent = intent;
-
-            parsePushJson(context, json);
+//            parseIntent = intent;
+//
+//            parsePushJson(context, json);
 
         } catch (JSONException e) {
             Log.e(TAG, "Push message json exception: " + e.getMessage());
@@ -71,16 +75,14 @@ public class CustomPushReceiver extends ParsePushBroadcastReceiver {
             String title = data.getString("alert");
             String message = data.getString("message");
 
-            String[] tokens = message.split("|");
-            if (tokens.length == 2) {
-                String userEmail = tokens[0];
-                String questionId = tokens[1];
+            Intent pushIntent = new Intent();
+            pushIntent.setClassName(context, "uet.vav.stuber.activities.PairedActivity");
+            pushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pushIntent.putExtra("message", message);
+            context.startActivity(pushIntent);
 
-
-            }
-
-            Intent resultIntent = new Intent(context, PairedActivity.class);
-            showNotificationMessage(context, "Stuber", title, resultIntent);
+//            Intent resultIntent = new Intent(context, PairedActivity.class);
+//            showNotificationMessage(context, "Stuber", title, resultIntent);
         } catch (JSONException e) {
             Log.e(TAG, "Push message json exception: " + e.getMessage());
         }
