@@ -4,7 +4,6 @@ package uet.vav.stuber.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +69,8 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                 } else if (mProblemEditText.getText().length() <= 10) {
                     mActivity.showProgressDialogWithPositiveButton("error", "Your problem must be more than 10 characters!");
                 } else {
+                    mActivity.showProgressDialog("loading", "Broadcast message is sending...");
+
                     ParseObject broadcastRequest = new ParseObject("Question");
                     broadcastRequest.put("fields", mAddedFields.toString());
                     broadcastRequest.put("problem", mProblemEditText.getText().toString());
@@ -85,8 +86,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                                     new AsyncHttpResponseHandler() {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
-                                            Log.d("Stuber_response", new String(responseBody));
+                                            mActivity.removePreviousDialog("loading");
 
                                             Intent intent = new Intent(mContext, BroadcastingActivity.class);
                                             intent.putExtra("data", new String(responseBody));
@@ -95,7 +95,9 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
 
                                         @Override
                                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
+//                                            Toast.makeText(mContext, new String(responseBody), Toast.LENGTH_LONG).show();
+                                            mActivity.removePreviousDialog("loading");
+                                            mActivity.showProgressDialogWithPositiveButton("error", new String(responseBody));
                                         }
                                     });
                         }
