@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="uet.vav.stuber">
+    package="uet.vav.stuber">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <!-- EXTERNAL_STORAGE permissions are optional for Android 6.0 onwards. -->
     <uses-permission
@@ -16,7 +15,6 @@
         android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -26,6 +24,7 @@
     <permission
         android:name="uet.vav.stuber.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="uet.vav.stuber.permission.C2D_MESSAGE" />
 
     <application
@@ -37,13 +36,13 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.parse.APPLICATION_ID"
-            android:value="@string/parse_app_id"/>
+            android:value="@string/parse_app_id" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="@string/parse_client_key"/>
+            android:value="@string/parse_client_key" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -53,9 +52,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -65,45 +64,43 @@
         <activity
             android:name=".activities.LogInActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.UserDetailActivity"
             android:label="@string/title_activity_user_detail"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.BroadcastingActivity"
             android:label="@string/title_activity_broadcasting"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name"/>
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".activities.ChatActivity"
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.PairedActivity"
-            android:label="@string/title_activity_paired"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask"
-            android:taskAffinity=""
             android:excludeFromRecents="true"
-            android:parentActivityName=".activities.SplashActivity">
+            android:label="@string/title_activity_paired"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activities.SplashActivity"
+            android:taskAffinity=""
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.SplashActivity"/>
+                android:value=".activities.SplashActivity" />
         </activity>
 
         <service android:name="com.parse.PushService" />
+
         <receiver
             android:name=".receiver.CustomPushReceiver"
             android:exported="false">
@@ -125,6 +122,10 @@
                 <category android:name="uet.vav.stuber" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activities.PrefActivity"
+            android:label="@string/title_activity_pref"></activity>
     </application>
 
 </manifest>

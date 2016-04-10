@@ -46,8 +46,8 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
         final User u = dataSet.get(position);
         holder.name.setText(u.getName());
         holder.skills.setText(u.getSkills());
-        holder.price.setText(String.valueOf(u.getHireRate()));
-        holder.rating.setText(u.getRating() + "/5");
+        holder.price.setText(String.valueOf(u.getHireRate()) + "$/hr");
+        holder.rating.setText("Rating: " + u.getRating() + "/5.0");
         holder.rating.invalidate();
         holder.hire.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +60,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, UserDetailActivity.class);
                 intent.putExtra("uid", dataSet.get(position).getId());
+                intent.putExtra("name", dataSet.get(position).getName());
                 mActivity.startActivity(intent);
             }
         });

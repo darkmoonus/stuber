@@ -1,26 +1,34 @@
 package uet.vav.stuber.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.ParseException;
+import java.util.List;
 
 import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
+import uet.vav.stuber.customizes.MyGifView;
 import uet.vav.stuber.customizes.MyTextView;
 import uet.vav.stuber.models.User;
 import uet.vav.stuber.utils.Constants;
@@ -30,7 +38,6 @@ public class UserDetailActivity extends CoreActivity {
     private String userID;
     private ActionBar actionBar;
     private FloatingActionButton fab;
-    private User user;
     private RatingBar rating;
     private MyTextView tvRatingString;
     private MyTextView tvRateHire;
@@ -39,6 +46,8 @@ public class UserDetailActivity extends CoreActivity {
     private MyTextView tvSkills;
     private MyTextView tvExperiences;
     private MyTextView tvProject;
+    private LinearLayout contentLayout, loadingLayout;
+    protected MyGifView mLoadingView;
 
 
     @Override
@@ -55,35 +64,48 @@ public class UserDetailActivity extends CoreActivity {
     }
 
     public void loadUserData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
-        query.getInBackground(userID, new GetCallback<ParseObject>() {
+        new Thread(new Runnable() {
             @Override
-            public void done(ParseObject object, com.parse.ParseException e) {
-                if (e == null) {
-                    String id = object.getObjectId();
-                    String email = object.getString(Constants.PROFILE_EMAIl);
-                    String name = object.getString(Constants.PROFILE_NAME);
-                    String skills = object.getString(Constants.PROFILE_SKILLS);
-                    String experience = object.getString(Constants.PROFILE_EXPERIENCE);
-                    double hireRate = object.getDouble(Constants.PROFILE_HIRERATE);
-                    String address = object.getString(Constants.PROFILE_ADRESS);
-                    String project = object.getString(Constants.PROFILE_PROJECTS);
-                    double ratingX = object.getDouble(Constants.PROFILE_RATING);
-                    int age = object.getInt("Old");
-
-                    tvRatingString.setText(rating + "");
-                    tvRateHire.setText(hireRate + "/hr");
-                    tvAddress.setText(address);
-                    tvProject.setText(project);
-                    tvExperiences.setText(experience);
-                    tvSkills.setText(skills);
-                    tvEmail.setText(email);
-                    rating.setRating((float) ratingX);
-                } else {
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                query.whereEqualTo("objectId", userID);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                        if (e == null) {
+                            ParseObject object = objects.get(0);
+                            String email = object.getString("email");
+                            String skills = object.getString(Constants.PROFILE_SKILLS);
+                            String experience = object.getString(Constants.PROFILE_EXPERIENCE);
+                            double hireRate = object.getDouble(Constants.PROFILE_HIRERATE);
+                            String address = object.getString(Constants.PROFILE_ADRESS);
+                            String project = object.getString(Constants.PROFILE_PROJECTS);
+                            double ratingX = object.getDouble(Constants.PROFILE_RATING);
+
+                            tvRatingString.setText(ratingX + "/5.0");
+                            tvRateHire.setText(hireRate + "$/hr");
+                            tvAddress.setText(address);
+                            tvProject.setText(project);
+                            tvExperiences.setText(experience);
+                            tvSkills.setText(skills);
+                            tvEmail.setText(email);
+                            rating.setRating((float) ratingX);
+                            LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+                            stars.getDrawable(2).setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                            loadingLayout.setVisibility(View.GONE);
+                            contentLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            // error
+                        }
+                    }
+                });
             }
-        });
+        }).start();
     }
 
     private void setupToolbar() {
@@ -94,14 +116,18 @@ public class UserDetailActivity extends CoreActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("uid");
+        String uName = intent.getStringExtra("name");
+        actionBar.setTitle(uName);
+        setStatusBarColor(R.color.colorPrimary);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:
-//                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
-                Intent intent = new Intent(UserDetailActivity.this, PairedActivity.class);
+                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
                 intent.putExtra("uid", StuberApplication.USER_ID);
                 intent.putExtra("pid", userID);
                 startActivity(intent);
@@ -120,15 +146,15 @@ public class UserDetailActivity extends CoreActivity {
         tvSkills = (MyTextView) findViewById(R.id.skills);
         tvProject = (MyTextView) findViewById(R.id.projects);
         tvExperiences = (MyTextView) findViewById(R.id.experience);
+        contentLayout = (LinearLayout) findViewById(R.id.content);
+        loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+        mLoadingView = (MyGifView) findViewById(R.id.progressLoading);
     }
 
     @Override
     public void initModels() {
         setupToolbar();
-        Intent intent = getIntent();
-        userID = intent.getStringExtra("uid");
-        setStatusBarColor(R.color.colorPrimary);
-        actionBar.setTitle(userID);
+        mLoadingView.setMovieResource(R.mipmap.progress);
     }
 
     @Override

@@ -24,6 +24,7 @@ import uet.vav.stuber.R;
 import uet.vav.stuber.activities.MainActivity;
 import uet.vav.stuber.adapters.DirectListAdapter;
 import uet.vav.stuber.cores.CoreFragment;
+import uet.vav.stuber.customizes.MyGifView;
 import uet.vav.stuber.models.User;
 import uet.vav.stuber.utils.Constants;
 
@@ -35,6 +36,7 @@ public class DirectFragment extends CoreFragment implements Serializable {
     private ArrayList<User> mUserList = new ArrayList<>();
     private int limit = 10;
     private int page = 1;
+    protected MyGifView mLoadingView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,40 +73,50 @@ public class DirectFragment extends CoreFragment implements Serializable {
     }
 
     public void loadData(int page, int limit) {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.findInBackground(new FindCallback<ParseUser>() {
+        new Thread(new Runnable() {
             @Override
-            public void done(List<ParseUser> userObjects, ParseException error) {
-                if (userObjects != null) {
-                    mDirectListAdapter.clearData();
-                    for (int i = 0; i < userObjects.size(); i++) {
-                        ParseUser pu = userObjects.get(i);
-                        String id = pu.getObjectId();
-                        String email = pu.getString(Constants.PROFILE_EMAIl);
-                        String name = pu.getString(Constants.PROFILE_NAME);
-                        String skills = pu.getString(Constants.PROFILE_SKILLS);
-                        String experience = pu.getString(Constants.PROFILE_EXPERIENCE);
-                        double hireRate = pu.getDouble(Constants.PROFILE_HIRERATE);
-                        String address = pu.getString(Constants.PROFILE_ADRESS);
-                        String project = pu.getString(Constants.PROFILE_PROJECTS);
-                        double rating = pu.getDouble(Constants.PROFILE_RATING);
-                        int age = pu.getInt("Old");
-                        User u = new User(id, name, email, age, address, skills, rating, hireRate, experience, project);
-                        mDirectListAdapter.addItem(u);
-                    }
-
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mEmptyView.setVisibility(View.GONE);
-                            mDirectListView.setVisibility(View.VISIBLE);
-                        }
-                    });
-                } else {
-
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                ParseQuery<ParseUser> query = ParseUser.getQuery();
+                query.findInBackground(new FindCallback<ParseUser>() {
+                    @Override
+                    public void done(List<ParseUser> userObjects, ParseException error) {
+                        if (userObjects != null) {
+                            mDirectListAdapter.clearData();
+                            for (int i = 0; i < userObjects.size(); i++) {
+                                ParseUser pu = userObjects.get(i);
+                                String id = pu.getObjectId();
+                                String email = pu.getString(Constants.PROFILE_EMAIl);
+                                String name = pu.getString(Constants.PROFILE_NAME);
+                                String skills = pu.getString(Constants.PROFILE_SKILLS);
+                                String experience = pu.getString(Constants.PROFILE_EXPERIENCE);
+                                double hireRate = pu.getDouble(Constants.PROFILE_HIRERATE);
+                                String address = pu.getString(Constants.PROFILE_ADRESS);
+                                String project = pu.getString(Constants.PROFILE_PROJECTS);
+                                double rating = pu.getDouble(Constants.PROFILE_RATING);
+                                int age = pu.getInt("Old");
+                                User u = new User(id, name, email, age, address, skills, rating, hireRate, experience, project);
+                                mDirectListAdapter.addItem(u);
+                            }
+
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mEmptyView.setVisibility(View.GONE);
+                                    mDirectListView.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        } else {
+
+                        }
+                    }
+                });
             }
-        });
+        }).start();
     }
 
     @Override
@@ -113,13 +125,14 @@ public class DirectFragment extends CoreFragment implements Serializable {
 
     @Override
     protected void initModels() {
-
+        mLoadingView.setMovieResource(R.mipmap.progress);
     }
 
     @Override
     protected void initViews(View v) {
         mDirectListView = (UltimateRecyclerView) v.findViewById(R.id.directList);
         mEmptyView = (LinearLayout) v.findViewById(R.id.empty_view);
+        mLoadingView = (MyGifView) v.findViewById(R.id.progressLoading);
     }
 
     @Override
