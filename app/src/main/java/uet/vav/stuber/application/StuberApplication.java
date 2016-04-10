@@ -32,7 +32,6 @@ public class StuberApplication extends Application {
         // Optionally enable public read access.
         // defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-
         mInstance = this;
     }
 

@@ -19,7 +19,7 @@ import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
 
-public class LogInActivity extends CoreActivity {
+public class LoginActivity extends CoreActivity {
     private final static String LOG_TAG = "LoginActivity";
 
     private Button loginButton;
@@ -31,6 +31,7 @@ public class LogInActivity extends CoreActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         initViews();
         initModels();

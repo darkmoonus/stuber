@@ -102,7 +102,7 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder {
-        private ImageView avatar, state;
+        private ImageView avatar;
         private MyTextView name, price, skills;
         private MyTextView rating;
         private MyTextView hire;
@@ -112,7 +112,6 @@ public class DirectListAdapter extends RecyclerView.Adapter<DirectListAdapter.Da
         public DataObjectHolder(View itemView, int type) {
             super(itemView);
             avatar = (ImageView) itemView.findViewById(R.id.avatar);
-            state = (ImageView) itemView.findViewById(R.id.state);
             name = (MyTextView) itemView.findViewById(R.id.name);
             price = (MyTextView) itemView.findViewById(R.id.price);
             skills = (MyTextView) itemView.findViewById(R.id.skills);

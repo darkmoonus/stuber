@@ -35,7 +35,7 @@ public class SplashActivity extends CoreActivity {
             // do stuff with the user
             sendUserInfoToActivity(currentUser, MainActivity.class);
         } else {
-            Intent mainIntent = new Intent(SplashActivity.this, LogInActivity.class);
+            Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(mainIntent);
             finish();
         }
