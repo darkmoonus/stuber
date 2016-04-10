@@ -18,12 +18,16 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import uet.vav.stuber.R;
 import uet.vav.stuber.application.StuberApplication;
 import uet.vav.stuber.cores.CoreActivity;
+import uet.vav.stuber.customizes.MyTextView;
 import uet.vav.stuber.utils.Network;
 
 public class PairedActivity extends CoreActivity {
     private String userID, partnerId;
     private Button mBtAccept, mBtDecline;
     private String mTutee;
+    private String mQuestion;
+    private String mFields;
+    private MyTextView mQuestionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +38,17 @@ public class PairedActivity extends CoreActivity {
         initListeners();
         initAnimations();
 
+        mQuestionTextView = (MyTextView) findViewById(R.id.question_textview);
+
         Intent intent = getIntent();
-        mTutee = intent.getStringExtra("message");
+        String message = intent.getStringExtra("message");
         try {
-            mTutee = (new JSONObject(mTutee)).getString("message");
+            JSONObject jsonObject = new JSONObject(message);
+            mTutee = jsonObject.getString("message");
+            mQuestion = jsonObject.getString("question");
+            mQuestionTextView.setText(mQuestion);
+            mFields = jsonObject.getString("fields");
+//            Toast.makeText(this, mTutee + "\n" + mQuestion + "\n" + mFields, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -48,6 +59,8 @@ public class PairedActivity extends CoreActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.accept:
+                showProgressDialog("connecting", "Connecting with tutee...");
+
                 try {
                     JSONObject data = new JSONObject();
                     data.put("tutor", ParseUser.getCurrentUser().getEmail());
@@ -60,7 +73,7 @@ public class PairedActivity extends CoreActivity {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                     Log.d("onSuccess", new String(responseBody));
-
+                                    removePreviousDialog("connecting");
                                     Intent intent = new Intent(PairedActivity.this, ChatActivity.class);
                                     intent.putExtra("uid", StuberApplication.USER_ID);
                                     intent.putExtra("pid", partnerId);
@@ -69,6 +82,7 @@ public class PairedActivity extends CoreActivity {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                    removePreviousDialog("connecting");
                                     showProgressDialogWithPositiveButton("error", new String(responseBody));
                                 }
                             });

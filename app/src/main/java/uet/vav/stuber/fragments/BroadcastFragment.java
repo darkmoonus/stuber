@@ -81,7 +81,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                     broadcastRequest.put("question", mProblemEditText.getText().toString());
                     broadcastRequest.put("sender", ParseUser.getCurrentUser().getEmail());
 
-                    final String questionId = broadcastRequest.getObjectId();
+//                    final String questionId = broadcastRequest.getObjectId();
 
                     broadcastRequest.saveInBackground(new SaveCallback() {
                         @Override
@@ -89,7 +89,7 @@ public class BroadcastFragment extends CoreFragment implements TokenCompleteText
                             try {
                                 JSONObject data = new JSONObject();
                                 data.put("fields", mAddedFields.toString());
-                                data.put("question", questionId);
+                                data.put("question", mProblemEditText.getText().toString());
                                 data.put("sender", ParseUser.getCurrentUser().getEmail());
                                 HttpEntity entity = new StringEntity(data.toString());
 
