@@ -1,8 +1,12 @@
 package uet.vav.stuber.utils;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import cz.msebera.android.httpclient.HttpEntity;
 
 /**
  * Created by nvg58 on 11/22/15.
@@ -26,6 +30,12 @@ public class Network {
         client.addHeader("X-Parse-REST-API-Key", "m6czzrv5NEUqtvehketSyAfBCLkoBpRoALDqYqAZ");
         client.addHeader("Content-Type", "application/json");
         client.post(url, params, responseHandler);
+    }
+
+    public static void post(Context context, String url, HttpEntity entity, AsyncHttpResponseHandler responseHandler) {
+        client.addHeader("X-Parse-Application-Id", "D54tVmK03qzubK2xJi4bmMmGS0lsXaoQQbBPXIAn");
+        client.addHeader("X-Parse-REST-API-Key", "m6czzrv5NEUqtvehketSyAfBCLkoBpRoALDqYqAZ");
+        client.post(context, getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
